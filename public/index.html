@@ -3,93 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MarketWise - Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles.css">
+    <title>Marketwise SaaS</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body class="bg-gray-100">
-    <!-- Main header -->
-    <header class="bg-white border-b border-gray-200">
-        <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <div class="text-xl font-bold text-blue-600">Clozr</div>
-                    <nav class="ml-8">
-                        <ul class="flex space-x-4">
-                            <li><a href="#" class="text-gray-600 hover:text-gray-900">Received Leads</a></li>
-                            <li><a href="#" class="text-gray-600 hover:text-gray-900">Manage Lead Package</a></li>
-                            <li><a href="#" class="text-gray-600 hover:text-gray-900">Assignment Settings</a></li>
-                        </ul>
-                    </nav>
+<body>
+    <div class="min-h-screen bg-[#F9FAFB]">
+        <div class="flex">
+            <!-- Sidebar -->
+            <div class="w-64 bg-white h-screen fixed left-0 top-0 border-r border-[#EAECF0]">
+                <div class="p-6">
+                    <div class="flex items-center gap-3">
+                        <img src="/globe.svg" alt="Logo" class="w-8 h-8">
+                        <span class="text-[#101828] text-lg font-semibold">Marketwise</span>
+                    </div>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <span class="text-gray-600">•••••</span>
-                </div>
+                <nav class="mt-8">
+                    <a href="#" class="flex items-center gap-3 px-6 py-3 bg-[#F9FAFB] text-[#101828] border-r-4 border-[#7F56D9]">
+                        <img src="/window.svg" alt="Dashboard" class="w-5 h-5">
+                        <span>Dashboard</span>
+                    </a>
+                </nav>
             </div>
-        </div>
-    </header>
 
-    <!-- Stats header -->
-    <div class="bg-white border-b border-gray-200 py-4">
-        <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-8">
-                    <div>
-                        <div class="text-sm text-gray-500">Monthly Lead Order</div>
-                        <div class="text-2xl font-bold">500</div>
+            <!-- Main Content -->
+            <div class="ml-64 flex-1 p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <h1 class="text-2xl font-semibold text-[#101828]">Dashboard</h1>
+                    <div class="flex items-center gap-4">
+                        <div class="relative">
+                            <input type="text" placeholder="Search..." class="pl-10 pr-4 py-2 rounded-lg border border-[#D0D5DD] focus:outline-none focus:ring-2 focus:ring-[#7F56D9]">
+                            <img src="/search.svg" alt="Search" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5">
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="/profile.svg" alt="Profile" class="w-8 h-8 rounded-full">
+                            <span class="text-[#101828]">John Doe</span>
+                        </div>
                     </div>
-                    <div class="text-2xl font-bold text-gray-400">/</div>
-                    <div>
-                        <div class="text-sm text-gray-500">Leads Received</div>
-                        <div class="text-2xl font-bold">416</div>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-4 gap-6 mb-8">
+                    <div class="flex-1 px-8 py-5 bg-white rounded-lg border border-[#D0D5DD] flex flex-col items-center gap-1">
+                        <div class="text-[#65757D] text-sm font-medium tracking-wider box-title">Total Leads Received</div>
+                        <div class="text-[#101828] text-[30px] font-medium tracking-wider total-leads-counter">—</div>
                     </div>
+                    <div class="flex-1 px-8 py-5 bg-white rounded-lg border border-[#D0D5DD] flex flex-col items-center gap-1">
+                        <div class="text-[#65757D] text-sm font-medium tracking-wider">New Leads</div>
+                        <div class="text-[#101828] text-[30px] font-medium tracking-wider new-leads-counter">—</div>
+                    </div>
+                    <div class="flex-1 px-8 py-5 bg-white rounded-lg border border-[#D0D5DD] flex flex-col items-center gap-1">
+                        <div class="text-[#65757D] text-sm font-medium tracking-wider">Processed Leads</div>
+                        <div class="text-[#101828] text-[30px] font-medium tracking-wider processed-leads-counter">—</div>
+                    </div>
+                    <div class="flex-1 px-8 py-5 bg-white rounded-lg border border-[#D0D5DD] flex flex-col items-center gap-1">
+                        <div class="text-[#65757D] text-sm font-medium tracking-wider">Total Revenue</div>
+                        <div class="text-[#101828] text-[30px] font-medium tracking-wider revenue-counter">—</div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="flex items-center gap-2">
+                        <button class="px-4 py-2 bg-[#7F56D9] text-white rounded-lg filter-btn" data-filter="all">All</button>
+                        <button class="px-4 py-2 bg-white text-[#101828] rounded-lg border border-[#D0D5DD] filter-btn" data-filter="new">New</button>
+                        <button class="px-4 py-2 bg-white text-[#101828] rounded-lg border border-[#D0D5DD] filter-btn" data-filter="processed">Processed</button>
+                    </div>
+                    <div class="relative">
+                        <button class="px-4 py-2 bg-white text-[#101828] rounded-lg border border-[#D0D5DD] flex items-center gap-2" id="assignToBtn">
+                            Assign to
+                            <img src="/chevron-down.svg" alt="Dropdown" class="w-4 h-4">
+                        </button>
+                        <div class="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-[#D0D5DD] hidden" id="assignToDropdown">
+                            <button class="w-full px-4 py-2 text-left hover:bg-[#F9FAFB]" data-agent="all">All Agents</button>
+                            <div id="agentList"></div>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <input type="text" placeholder="Search leads..." class="w-full px-4 py-2 rounded-lg border border-[#D0D5DD] focus:outline-none focus:ring-2 focus:ring-[#7F56D9]" id="searchInput">
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="bg-white rounded-lg border border-[#D0D5DD] overflow-hidden">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-[#F9FAFB]">
+                                <th class="px-6 py-3 text-left text-xs font-medium text-[#65757D] uppercase tracking-wider">Contact</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-[#65757D] uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-[#65757D] uppercase tracking-wider">Agent</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-[#65757D] uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-[#65757D] uppercase tracking-wider">Campaign</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-[#65757D] uppercase tracking-wider">Budget</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-[#65757D] uppercase tracking-wider">Timeline</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-[#65757D] uppercase tracking-wider">Type</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leadsTableBody">
+                            <!-- Les leads seront ajoutés ici dynamiquement -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="container mx-auto px-4 py-8">
-        <!-- Filters and search -->
-        <div class="bg-white p-4 rounded-lg shadow mb-6">
-            <div class="flex justify-between items-center">
-                <div class="flex gap-4">
-                    <button onclick="filterLeads('all')" class="filter-button active">All</button>
-                    <button onclick="filterLeads('new')" class="filter-button">New</button>
-                    <button onclick="filterLeads('processed')" class="filter-button">Processed</button>
-                </div>
-                <div>
-                    <input type="text" id="searchInput" placeholder="Search..." class="px-4 py-2 border rounded-lg">
-                </div>
-            </div>
-        </div>
-
-        <!-- Leads table -->
-        <div class="bg-white rounded-lg shadow overflow-hidden">
-            <table class="min-w-full">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Contact</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reception Date</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Assigned to</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Campaign</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Budget</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Timeline</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Purchase Type</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
-                    </tr>
-                </thead>
-                <tbody id="leadsTableBody">
-                    <!-- Content will be filled by JavaScript -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Pagination -->
-        <div class="mt-4 flex items-center justify-center space-x-2" id="pagination">
-            <!-- Pagination will be filled by JavaScript -->
-        </div>
-    </div>
-    <script src="js/app.js"></script>
+    <script src="/js/app.js"></script>
 </body>
 </html> 

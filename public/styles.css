@@ -1,3 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Status badges */
+.status-badge {
+    @apply px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.status-new {
+    @apply bg-[#ECFDF3] text-[#027A48];
+}
+
+.status-processed {
+    @apply bg-[#FEF3F2] text-[#B42318];
+}
+
+/* Table rows */
+.table-row {
+    @apply border-b border-[#EAECF0];
+}
+
+.table-row:hover {
+    @apply bg-[#F9FAFB];
+}
+
+/* Agent image */
+.agent-image {
+    @apply w-8 h-8 rounded-full object-cover;
+}
+
+/* Filter buttons */
+.filter-btn {
+    @apply transition-colors duration-200;
+}
+
+.filter-btn:hover {
+    @apply bg-[#7F56D9] text-white;
+}
+
+/* Search input */
+#searchInput {
+    @apply transition-colors duration-200;
+}
+
+#searchInput:focus {
+    @apply border-[#7F56D9] ring-2 ring-[#7F56D9];
+}
+
+/* Dropdown */
+#assignToDropdown {
+    @apply transition-opacity duration-200;
+}
+
+/* Stats counters */
+.total-leads-counter,
+.new-leads-counter,
+.processed-leads-counter,
+.revenue-counter {
+    @apply transition-all duration-200;
+}
+
 .filter-button {
     display: flex;
     padding: 0.5rem 1rem;
@@ -17,26 +83,6 @@
     background: #F2F4F7;
     color: #111827;
     font-weight: 500;
-}
-
-.status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-}
-
-.status-badge.new {
-    background: #FFF7E6;
-    color: #FF9D00;
-}
-
-.status-badge.processed {
-    background: #ECFDF3;
-    color: #027A48;
 }
 
 .avatar {
