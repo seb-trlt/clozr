@@ -6,8 +6,8 @@ const port = 3000;
 
 // Configuration Airtable
 const base = new Airtable({
-    apiKey: 'patR73svyjNTmGg1R.cdce81371799fadd0bb79726f878db1f57bf9d76f1c95cfd487963eafb1f6351'
-}).base('appur4sFjYJvbuNtP');
+    apiKey: process.env.AIRTABLE_API_KEY
+}).base(process.env.AIRTABLE_BASE_ID);
 
 // Middleware pour parser le JSON
 app.use(express.json());
