@@ -5,9 +5,15 @@ const app = express();
 const port = 3000;
 
 // Configuration Airtable
+console.log('🔑 Variables d\'environnement:');
+console.log('AIRTABLE_API_KEY:', process.env.AIRTABLE_API_KEY ? '✅ Présent' : '❌ Manquant');
+console.log('AIRTABLE_BASE_ID:', process.env.AIRTABLE_BASE_ID ? '✅ Présent' : '❌ Manquant');
+
 const base = new Airtable({
     apiKey: process.env.AIRTABLE_API_KEY
 }).base(process.env.AIRTABLE_BASE_ID);
+
+const tableName = process.env.AIRTABLE_TABLE_NAME || 'tblcKOiISqb8Ic0c1';
 
 // Middleware pour parser le JSON
 app.use(express.json());
@@ -19,7 +25,7 @@ app.use(express.static(path.join(__dirname)));
 async function analyzeAirtableStructure() {
     try {
         console.log('🔍 Analyse de la structure Airtable...');
-        const records = await base('tblcKOiISqb8Ic0c1').select({
+        const records = await base(tableName).select({
             view: 'viwOVH7kYzXCfegT7',
             maxRecords: 1
         }).firstPage();
@@ -59,7 +65,7 @@ app.get('/api/leads', async (req, res) => {
         }
         
         // Récupérer tous les leads
-        const records = await base('tblcKOiISqb8Ic0c1').select({
+        const records = await base(tableName).select({
             view: 'viwOVH7kYzXCfegT7'
         }).all();
         
