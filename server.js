@@ -65,6 +65,7 @@ app.get('/api/leads', async (req, res) => {
         }
         
         // Récupérer tous les leads
+        console.log('🔍 Tentative de récupération des leads depuis Airtable...');
         const records = await base(tableName).select({
             view: 'viwOVH7kYzXCfegT7'
         }).all();
@@ -107,6 +108,7 @@ app.get('/api/leads', async (req, res) => {
             type: record.get('Question 3') || '—'
         }));
         
+        console.log('📊 Leads transformés:', leads);
         res.json(leads);
     } catch (error) {
         console.error('❌ Erreur lors de la récupération des leads:', error);
