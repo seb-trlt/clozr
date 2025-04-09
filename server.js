@@ -19,7 +19,9 @@ const tableName = process.env.AIRTABLE_TABLE_NAME || 'tblcKOiISqb8Ic0c1';
 app.use(express.json());
 
 // Servir les fichiers statiques
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/js', express.static(path.join(__dirname, 'public/js')));
+app.use('/css', express.static(path.join(__dirname, 'public')));
 
 // Fonction pour analyser la structure des champs
 async function analyzeAirtableStructure() {
@@ -118,7 +120,7 @@ app.get('/api/leads', async (req, res) => {
 
 // Route pour la page d'accueil
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(port, () => {
