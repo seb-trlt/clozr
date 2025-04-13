@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clead - Manage Lead Package</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .package-section {
+            width: 100%;
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            outline: 1px #D0D5DD solid;
+            outline-offset: -1px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-bottom: 24px;
+        }
+        .section-title {
+            color: #4C5563;
+            font-size: 20px;
+            font-family: Roboto;
+            font-weight: 500;
+            letter-spacing: 0.20px;
+        }
+        .campaign-list {
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 15px;
+            display: flex;
+        }
+        .campaign-row {
+            width: 368px;
+            justify-content: space-between;
+            align-items: center;
+            display: inline-flex;
+            border: none;
+            padding: 0;
+        }
+        .campaign-name {
+            color: #65757D;
+            font-size: 14px;
+            font-family: Roboto;
+            font-weight: 500;
+            letter-spacing: 0.14px;
+        }
+        .lead-count {
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            display: flex;
+        }
+        .lead-value {
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border-radius: 8px;
+            color: #4C5563;
+            font-size: 15px;
+            font-family: Roboto;
+            font-weight: 400;
+            line-height: 17.77px;
+        }
+        .lead-label {
+            color: #65757D;
+            font-size: 14px;
+            font-family: Roboto;
+            font-weight: 400;
+            letter-spacing: 0.14px;
+        }
+        .divider {
+            align-self: stretch;
+            height: 0px;
+            outline: 1px #D0D5DD solid;
+            outline-offset: -0.50px;
+            margin: 10px 0;
+        }
+        .total-row {
+            width: 368px;
+            justify-content: space-between;
+            align-items: center;
+            display: inline-flex;
+        }
+        .total-label {
+            color: #4C5563;
+            font-size: 14px;
+            font-family: Roboto;
+            font-weight: 600;
+            letter-spacing: 0.14px;
+        }
+        .total-value {
+            color: #4C5563;
+            font-size: 20px;
+            font-family: Roboto;
+            font-weight: 600;
+            line-height: 23.70px;
+        }
+        .info-box {
+            align-self: stretch;
+            padding: 20px 30px;
+            background: #EDF5FE;
+            border-radius: 10px;
+            outline: 1px #CEE2FA solid;
+            outline-offset: -1px;
+        }
+        .info-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .info-icon {
+            width: 31px;
+            height: 31px;
+            position: relative;
+            overflow: hidden;
+        }
+        .info-icon-inner {
+            width: 25.83px;
+            height: 25.83px;
+            left: 2.58px;
+            top: 2.58px;
+            position: absolute;
+            background: #248EF3;
+        }
+        .info-text {
+            flex: 1;
+            color: #248EF3;
+            font-size: 15px;
+            font-family: Roboto;
+            line-height: 20px;
+            letter-spacing: 0.15px;
+        }
+        .adjust-section {
+            margin-top: 24px;
+        }
+        .adjust-description {
+            color: #65757D;
+            font-size: 15px;
+            font-family: Roboto;
+            line-height: 20px;
+            letter-spacing: 0.15px;
+            margin-top: 15px;
+        }
+        .adjust-input {
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            background: white;
+            border-radius: 8px;
+            outline: 1px #D0D5DD solid;
+            outline-offset: -1px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .adjust-button {
+            width: 14px;
+            height: 14px;
+            padding: 3px;
+            background: #EDF5FE;
+            border-radius: 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+        }
+        .adjust-button svg {
+            width: 8px;
+            height: 8px;
+            fill: #248EF3;
+        }
+        .save-button {
+            padding: 15px 20px;
+            background: rgba(208, 213, 221, 0.65);
+            border-radius: 8px;
+            color: white;
+            font-size: 15px;
+            font-family: Roboto;
+            font-weight: 600;
+            line-height: 17.77px;
+            border: none;
+        }
+        .save-info {
+            color: #248EF3;
+            font-size: 15px;
+            font-family: Roboto;
+            font-weight: 500;
+            line-height: 20px;
+            letter-spacing: 0.15px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Main header -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-start gap-[55px] h-16">
+                <div class="text-[25px] font-medium text-[#101828]">Clead</div>
+                <nav>
+                    <ul class="flex items-center gap-[45px]">
+                        <li><a href="/" class="text-[15px] font-medium text-[#4C5563]">Received Leads</a></li>
+                        <li><a href="/manage-package.html" class="text-[15px] font-medium text-[#3FA1D9]">Manage Lead Package</a></li>
+                        <li><a href="/assignment-settings.html" class="text-[15px] font-medium text-[#4C5563]">Assignment Settings</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Current Package Section -->
+        <div class="package-section">
+            <h2 class="section-title">Current Lead Package</h2>
+            
+            <div class="campaign-list">
+                <div class="campaign-row">
+                    <span class="campaign-name">France Campaign</span>
+                    <div class="lead-count">
+                        <div class="lead-value">200</div>
+                        <span class="lead-label">Monthly Leads</span>
+                    </div>
+                </div>
+
+                <div class="campaign-row">
+                    <span class="campaign-name">UAE Campaign</span>
+                    <div class="lead-count">
+                        <div class="lead-value">100</div>
+                        <span class="lead-label">Monthly Leads</span>
+                    </div>
+                </div>
+
+                <div class="campaign-row">
+                    <span class="campaign-name">UK Campaign</span>
+                    <div class="lead-count">
+                        <div class="lead-value">100</div>
+                        <span class="lead-label">Monthly Leads</span>
+                    </div>
+                </div>
+
+                <div class="campaign-row">
+                    <span class="campaign-name">Germany Campaign</span>
+                    <div class="lead-count">
+                        <div class="lead-value">100</div>
+                        <span class="lead-label">Monthly Leads</span>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="total-row">
+                    <span class="total-label">Total</span>
+                    <div class="lead-count">
+                        <span class="total-value">500</span>
+                        <span class="lead-label">Monthly Leads</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="width: 100%; height: 100%; padding-left: 30px; padding-right: 30px; padding-top: 20px; padding-bottom: 20px; background: #EDF5FE; border-radius: 10px; outline: 1px #CEE2FA solid; outline-offset: -1px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 20px; display: inline-flex">
+                <div style="align-self: stretch; justify-content: flex-start; align-items: center; gap: 20px; display: inline-flex">
+                    <div style="width: 31px; height: 31px; position: relative; background: #EDF5FE; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid #248EF3">
+                        <div style="color: #248EF3; font-size: 16px; font-family: Roboto; font-weight: 600; line-height: 20px;">i</div>
+                    </div>
+                    <div style="flex: 1 1 0; color: #248EF3; font-size: 15px; font-family: Roboto; line-height: 20px; letter-spacing: 0.15px;">
+                        Your lead package will be <strong>automatically renewed</strong> for next month. If you wish to modify it, you have <strong>7 days remaining</strong> (until March 28, 2025). If no changes are made, the package will remain the same.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Adjust Package Section -->
+        <div class="package-section">
+            <div class="section-title">Adjust your Next Monthly Lead Package</div>
+            
+            <div class="adjust-description">
+                <span>You can increase or decrease your total monthly Lead Package by adjusting the number of leads per campaign in increments of 100. </span>
+                <span style="font-weight: 600">Please note that the minimum Lead Package is 200 leads in total</span>
+                <span>. If you wish to decrease your package below 200 leads per month or cancel your lead purchase subscription, please contact a representative.</span>
+            </div>
+
+            <div class="campaign-list">
+                <div class="campaign-row">
+                    <span class="campaign-name">France Campaign</span>
+                    <div class="adjust-input">
+                        <button class="adjust-button" onclick="adjustLeads('france', -100)">
+                            <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
+                        </button>
+                        <span id="france-leads">200</span>
+                        <button class="adjust-button" onclick="adjustLeads('france', 100)">
+                            <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="campaign-row">
+                    <span class="campaign-name">UAE Campaign</span>
+                    <div class="adjust-input">
+                        <button class="adjust-button" onclick="adjustLeads('uae', -100)">
+                            <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
+                        </button>
+                        <span id="uae-leads">100</span>
+                        <button class="adjust-button" onclick="adjustLeads('uae', 100)">
+                            <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="campaign-row">
+                    <span class="campaign-name">UK Campaign</span>
+                    <div class="adjust-input">
+                        <button class="adjust-button" onclick="adjustLeads('uk', -100)">
+                            <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
+                        </button>
+                        <span id="uk-leads">100</span>
+                        <button class="adjust-button" onclick="adjustLeads('uk', 100)">
+                            <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="campaign-row">
+                    <span class="campaign-name">Germany Campaign</span>
+                    <div class="adjust-input">
+                        <button class="adjust-button" onclick="adjustLeads('germany', -100)">
+                            <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
+                        </button>
+                        <span id="germany-leads">100</span>
+                        <button class="adjust-button" onclick="adjustLeads('germany', 100)">
+                            <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="total-row">
+                    <span class="total-label">Total</span>
+                    <div class="lead-count">
+                        <span id="total-leads" class="total-value">500</span>
+                        <span class="lead-label">Monthly Leads</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-5">
+                <button id="save-changes" class="save-button">Save Changes</button>
+                <span class="save-info">Any changes will be applied to the following month.</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const campaigns = {
+            france: { min: 200, current: 200 },
+            uae: { min: 0, current: 100 },
+            uk: { min: 0, current: 100 },
+            germany: { min: 0, current: 100 }
+        };
+
+        function adjustLeads(campaign, change) {
+            const input = document.getElementById(`${campaign}-leads`);
+            const currentValue = parseInt(input.textContent);
+            const newValue = currentValue + change;
+            
+            // Vérifier les minimums par campagne
+            if (newValue < campaigns[campaign].min) return;
+            
+            // Calculer le nouveau total
+            const totalLeads = Object.keys(campaigns)
+                .reduce((sum, key) => {
+                    return sum + (key === campaign ? newValue : parseInt(document.getElementById(`${key}-leads`).textContent));
+                }, 0);
+            
+            // Vérifier le minimum total de 200 leads
+            if (totalLeads < 200) return;
+            
+            input.textContent = newValue;
+            campaigns[campaign].current = newValue;
+            
+            // Mettre à jour le total
+            document.getElementById('total-leads').textContent = totalLeads;
+        }
+
+        document.getElementById('save-changes').addEventListener('click', function() {
+            // Ici, vous pouvez ajouter la logique pour sauvegarder les changements
+            alert('Changes saved successfully!');
+        });
+
+        // Fonction pour récupérer l'ID de l'URL
+        function getIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // Fonction pour mettre à jour les liens avec l'ID
+        function updateLinksWithId() {
+            const id = getIdFromUrl();
+            if (id) {
+                document.querySelectorAll('a').forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && !href.includes('?')) {
+                        link.href = `${href}?id=${id}`;
+                    }
+                });
+            }
+        }
+
+        // Mettre à jour les liens immédiatement
+        updateLinksWithId();
+        // Mettre à jour les liens après le chargement complet du DOM
+        document.addEventListener('DOMContentLoaded', updateLinksWithId);
+    </script>
+</body>
+</html> 

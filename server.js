@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const Airtable = require('airtable');
+const fs = require('fs');
 const app = express();
 const port = 3000;
 
@@ -20,8 +21,7 @@ const tableName = process.env.AIRTABLE_TABLE_NAME || 'tblcKOiISqb8Ic0c1';
 app.use(express.json());
 
 // Servir les fichiers statiques
-app.use(express.static(path.join(__dirname)));
-app.use('/', express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Fonction pour analyser la structure des champs
 async function analyzeAirtableStructure() {
@@ -51,76 +51,103 @@ async function analyzeAirtableStructure() {
 // Appel de l'analyse au démarrage du serveur
 analyzeAirtableStructure();
 
+// Route pour la page d'accueil
+app.get('/', (req, res) => {
+    console.log('📍 Requête reçue sur /');
+    console.log('📍 URL complète:', req.url);
+    console.log('📍 Query string:', req.query);
+    
+    // Servir directement la page sans redirection
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Route pour récupérer les leads depuis Airtable
 app.get('/api/leads', async (req, res) => {
     try {
+        const userEmail = req.query.id.toLowerCase();
+        console.log('\n🔍 Nouvelle requête sur /api/leads');
         console.log('🔍 URL complète:', req.protocol + '://' + req.get('host') + req.originalUrl);
-        console.log('🔍 Paramètres de requête:', req.query);
-        console.log('🔍 Headers:', req.headers);
-        
-        const userEmail = req.query.id;
-        console.log('🔍 Email utilisateur reçu:', userEmail);
+        console.log('🔍 Email reçu:', userEmail);
         
         if (!userEmail) {
-            console.log('❌ Aucun email utilisateur fourni');
-            return res.status(400).json({ error: 'Email utilisateur requis' });
+            console.log('❌ Pas d\'email fourni');
+            return res.status(400).json({ error: 'Email requis' });
         }
-        
-        // Récupérer tous les leads
-        console.log('🔍 Tentative de récupération des leads depuis Airtable...');
+
+        console.log('🔍 Configuration Airtable:');
+        console.log('- Base ID:', process.env.AIRTABLE_BASE_ID);
+        console.log('- Table:', tableName);
+        console.log('- View:', 'viwOVH7kYzXCfegT7');
+
         const records = await base(tableName).select({
             view: 'viwOVH7kYzXCfegT7'
         }).all();
         
-        console.log('📊 Nombre total de leads trouvés:', records.length);
+        console.log('📊 Total records trouvés:', records.length);
         
-        // Fonction pour vérifier si l'utilisateur a accès au lead
-        const hasAccess = (record) => {
-            const usersAdmin = record.get('Users Admin');
-            console.log('🔍 Users Admin:', usersAdmin);
-            console.log('🔍 Email recherché:', userEmail);
-            
-            if (!usersAdmin) return false;
-            
-            // Convertir en tableau si ce n'est pas déjà le cas
-            const emails = Array.isArray(usersAdmin) ? usersAdmin : usersAdmin.split(',');
-            console.log('🔍 Emails trouvés:', emails);
-            
-            // Vérifier si l'email est dans la liste
-            const hasAccess = emails.includes(userEmail);
-            console.log('🔍 Accès trouvé:', hasAccess);
-            
-            return hasAccess;
-        };
+        // Vérifier l'accès de l'utilisateur
+        const accessibleRecords = records.filter(record => {
+            const usersAdmin = record.fields['Users Admin'] || '';
+            const emails = usersAdmin.split(',').map(email => email.trim().toLowerCase());
+            console.log('📧 Emails extraits:', emails);
+            return emails.includes(userEmail);
+        });
         
-        // Filtrer les leads selon l'accès de l'utilisateur
-        const filteredRecords = records.filter(hasAccess);
-        console.log('📊 Nombre de leads après filtrage:', filteredRecords.length);
+        console.log('📊 Nombre d\'enregistrements accessibles:', accessibleRecords.length);
         
-        // Transformer les records en format plus simple
-        const leads = filteredRecords.map(record => ({
-            id: record.id,
-            contact: `${record.get('First name') || ''} ${record.get('Last name') || ''}`.trim() || '—',
-            date: record.get('Created') || new Date().toISOString(),
-            agent: record.get('agent') || '—',
-            status: record.get('Status') || 'New',
-            campaign: record.get('State') || '—',
-            budget: record.get('Question 1') || '—',
-            timeline: record.get('Question 2') || '—',
-            type: record.get('Question 3') || '—'
-        }));
+        const leads = accessibleRecords.map(record => {
+            const lead = {
+                id: record.id,
+                contact: `${record.fields['First name'] || ''} ${record.fields['Last name'] || ''}`.trim(),
+                date: record.fields['Created'],
+                created_at: record.fields['created_at'],
+                agent: record.fields['agent'],
+                status: record.fields['status'] || 'New',
+                campaign: record.fields['State'],
+                budget: record.fields['Question 1'],
+                timeline: record.fields['Question 2'],
+                type: record.fields['Question 3']
+            };
+            console.log('📄 Lead transformé:', lead);
+            return lead;
+        });
         
-        console.log('📊 Leads transformés:', leads);
+        console.log('\n📊 Leads à envoyer:', leads.length);
         res.json(leads);
+        
     } catch (error) {
-        console.error('❌ Erreur lors de la récupération des leads:', error);
-        res.status(500).json({ error: 'Erreur serveur' });
+        console.error('\n❌ Erreur détaillée:', error);
+        res.status(500).json({ 
+            error: 'Erreur serveur',
+            details: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
     }
 });
 
-// Route pour la page d'accueil
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.post('/api/leads/status', async (req, res) => {
+    try {
+        const { leadId, status, reason, comment } = req.body;
+        
+        if (!leadId || !status) {
+            return res.status(400).json({ error: 'ID du lead et statut requis' });
+        }
+
+        // Utiliser 'Contested' comme valeur de statut
+        const statusValue = 'Contested';
+
+        // Mettre à jour le statut dans Airtable
+        const record = await base('Leads').update(leadId, {
+            'status': statusValue,
+            'Claim Reason': reason,
+            'Claim Comment': comment
+        });
+
+        res.json({ success: true, record });
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour du statut:', error);
+        res.status(500).json({ error: 'Erreur lors de la mise à jour du statut' });
+    }
 });
 
 app.listen(port, () => {

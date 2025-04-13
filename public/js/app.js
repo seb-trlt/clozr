@@ -1,210 +1,50 @@
-// Déclaration des types pour TypeScript
-window.filterLeads = function(status) {
-    // Implémentation à venir
-};
-
-// Données de test
-const leads = [
-    {
-        contact: "John Smith",
-        date: "2024-03-15",
-        assignedTo: "Alice Johnson",
-        status: "new",
-        campaign: "Spring 2024",
-        budget: "$5,000",
-        timeline: "3 months",
-        purchaseType: "Service"
-    },
-    // ... autres leads ...
-];
-
+// Variables globales
+let leads = [];
 let currentPage = 1;
 const leadsPerPage = 10;
-
-// Fonction pour afficher les leads
-function displayLeads(leadsToShow) {
-    const tableBody = document.getElementById('leadsTableBody');
-    if (!tableBody) return;
-    
-    tableBody.innerHTML = '';
-    
-    const start = (currentPage - 1) * leadsPerPage;
-    const end = start + leadsPerPage;
-    const paginatedLeads = leadsToShow.slice(start, end);
-
-    paginatedLeads.forEach(lead => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td class="px-6 py-4">${lead.contact}</td>
-            <td class="px-6 py-4">${lead.date}</td>
-            <td class="px-6 py-4">${lead.assignedTo}</td>
-            <td class="px-6 py-4">
-                <span class="px-2 py-1 text-xs rounded-full ${
-                    lead.status === 'new' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                }">${lead.status}</span>
-            </td>
-            <td class="px-6 py-4">${lead.campaign}</td>
-            <td class="px-6 py-4">${lead.budget}</td>
-            <td class="px-6 py-4">${lead.timeline}</td>
-            <td class="px-6 py-4">${lead.purchaseType}</td>
-            <td class="px-6 py-4">
-                <button class="text-blue-600 hover:text-blue-800">View</button>
-            </td>
-        `;
-        tableBody.appendChild(row);
-    });
-
-    updatePagination(leadsToShow.length);
-}
-
-// Fonction pour mettre à jour la pagination
-function updatePagination(totalLeads) {
-    const paginationDiv = document.getElementById('pagination');
-    if (!paginationDiv) return;
-
-    const totalPages = Math.ceil(totalLeads / leadsPerPage);
-    
-    paginationDiv.innerHTML = `
-        <button 
-            class="px-4 py-2 border rounded ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}"
-            ${currentPage === 1 ? 'disabled' : ''}
-            onclick="changePage(${currentPage - 1})"
-        >
-            Previous
-        </button>
-        <span class="px-4 py-2">Page ${currentPage} of ${totalPages}</span>
-        <button 
-            class="px-4 py-2 border rounded ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}"
-            ${currentPage === totalPages ? 'disabled' : ''}
-            onclick="changePage(${currentPage + 1})"
-        >
-            Next
-        </button>
-    `;
-}
-
-// Fonction pour changer de page
-window.changePage = function(newPage) {
-    if (newPage >= 1 && newPage <= Math.ceil(leads.length / leadsPerPage)) {
-        currentPage = newPage;
-        displayLeads(leads);
-    }
-};
-
-// Fonction de filtrage
-window.filterLeads = function(status) {
-    const buttons = document.querySelectorAll('.filter-button');
-    buttons.forEach(button => button.classList.remove('active'));
-    event.target.classList.add('active');
-
-    const filteredLeads = status === 'all' 
-        ? leads 
-        : leads.filter(lead => lead.status === status);
-    
-    currentPage = 1;
-    displayLeads(filteredLeads);
-};
-
-// Fonction de recherche
-document.getElementById('searchInput')?.addEventListener('input', function(e) {
-    const searchTerm = e.target.value.toLowerCase();
-    const filteredLeads = leads.filter(lead => 
-        lead.contact.toLowerCase().includes(searchTerm) ||
-        lead.campaign.toLowerCase().includes(searchTerm) ||
-        lead.assignedTo.toLowerCase().includes(searchTerm)
-    );
-    currentPage = 1;
-    displayLeads(filteredLeads);
-});
-
-// Initialisation
-document.addEventListener('DOMContentLoaded', () => {
-    displayLeads(leads);
-});
-
-let leads = [];
 let currentFilter = 'all';
 let currentAgentFilter = 'all';
 
-// Fonction pour charger les leads
-async function loadLeads() {
-    try {
-        const userEmail = 'seb@clozr.com'; // Email de test
-        const response = await fetch(`/api/leads?id=${userEmail}`);
-        if (!response.ok) {
-            throw new Error('Erreur lors de la récupération des leads');
-        }
-        leads = await response.json();
-        displayFilteredLeads();
-        updateAgentList();
-    } catch (error) {
-        console.error('Erreur:', error);
-    }
-}
-
 // Fonction pour afficher les leads filtrés
 function displayFilteredLeads() {
-    console.log('📊 Affichage des leads');
-    console.log('📊 Nombre total de leads:', leads.length);
-    console.log('📊 Filtre actuel:', currentFilter);
-    console.log('📊 Agent actuel:', currentAgentFilter);
-
-    // Appliquer le filtre par agent
-    let filteredByAgent = currentAgentFilter === 'all' 
-        ? leads 
-        : leads.filter(lead => lead.agent === currentAgentFilter);
-
-    console.log('📊 Nombre de leads après filtre agent:', filteredByAgent.length);
+    let filteredLeads = leads;
 
     // Appliquer le filtre par statut
     if (currentFilter !== 'all') {
-        filteredByAgent = filteredByAgent.filter(lead => 
-            lead.status.toLowerCase() === currentFilter
-        );
+        filteredLeads = filteredLeads.filter(lead => {
+            const leadStatus = lead.status?.toLowerCase() || 'new';
+            return leadStatus === currentFilter;
+        });
     }
 
-    console.log('📊 Nombre de leads après filtre statut:', filteredByAgent.length);
+    // Appliquer le filtre par agent
+    if (currentAgentFilter !== 'all') {
+        filteredLeads = filteredLeads.filter(lead => lead.agent === currentAgentFilter);
+    }
 
     // Appliquer la recherche
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    if (searchTerm) {
-        filteredByAgent = filteredByAgent.filter(lead => 
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput && searchInput.value) {
+        const searchTerm = searchInput.value.toLowerCase();
+        filteredLeads = filteredLeads.filter(lead => 
             lead.contact.toLowerCase().includes(searchTerm) ||
             lead.agent.toLowerCase().includes(searchTerm) ||
             lead.campaign.toLowerCase().includes(searchTerm)
         );
     }
 
-    console.log('📊 Nombre de leads après recherche:', filteredByAgent.length);
-    
-    // Mettre à jour le compteur de leads
-    const leadsCountElement = document.getElementById('leadsCount');
-    if (leadsCountElement) {
-        leadsCountElement.textContent = filteredByAgent.length;
-    }
-
-    // Mettre à jour le compteur total de leads
-    const totalLeadsCounter = document.querySelector('.total-leads-counter');
-    if (totalLeadsCounter) {
-        totalLeadsCounter.textContent = filteredByAgent.length;
-    }
-
-    // Mettre à jour le titre de la box
-    const boxTitle = document.querySelector('.box-title');
-    if (boxTitle) {
-        boxTitle.textContent = 'Total Leads Received';
-    }
-
-    displayLeads(filteredByAgent);
+    displayLeads(filteredLeads);
 }
 
 // Fonction pour afficher les leads dans le tableau
 function displayLeads(leadsToShow) {
     const tbody = document.getElementById('leadsTableBody');
+    if (!tbody) return;
+
     if (!leadsToShow || leadsToShow.length === 0) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="8" class="text-center py-4 text-gray-500">
+                <td colspan="9" class="text-center py-4 text-gray-500">
                     No leads found
                 </td>
             </tr>
@@ -213,22 +53,58 @@ function displayLeads(leadsToShow) {
     }
 
     tbody.innerHTML = leadsToShow.map(lead => `
-        <tr class="table-row">
-            <td class="px-6 py-4">${lead.contact}</td>
-            <td class="px-6 py-4">${new Date(lead.date).toLocaleDateString()}</td>
-            <td class="px-6 py-4">
-                <div class="flex items-center gap-2">
-                    <img src="/profile.svg" alt="${lead.agent}" class="agent-image">
-                    <span>${lead.agent}</span>
+        <tr>
+            <td colspan="9" class="p-0">
+                <div style="width: 100%; height: 100%; padding-left: 15px; padding-right: 15px; padding-top: 12px; padding-bottom: 12px; justify-content: flex-start; align-items: center; gap: 18px; display: inline-flex">
+                    <div style="width: 10px; height: 10px; border-radius: 2px; outline: 1px var(--Border-+-Light-Field-Text, #D0D5DD) solid"></div>
+                    <div data-property-1="no filter" style="width: 150px; justify-content: flex-start; align-items: center; gap: 8px; display: flex">
+                        <div style="color: var(--Dark-Grey-text-&-icons, #4C5563); font-size: 13px; font-family: Roboto; font-weight: 500; word-wrap: break-word">${lead.contact}</div>
+                    </div>
+                    <div data-property-1="no filter" style="width: 150px; justify-content: flex-start; align-items: center; gap: 8px; display: flex">
+                        <div><span style="color: var(--Dark-Grey-text-&-icons, #4C5563); font-size: 13px; font-family: Roboto; font-weight: 400; line-height: 14px; word-wrap: break-word">${new Date(lead.date || lead.created_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}<br/></span><span style="color: #248EF3; font-size: 11px; font-family: Roboto; font-weight: 400; line-height: 14px; word-wrap: break-word">${new Date(lead.date || lead.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} (+04)</span></div>
+                    </div>
+                    <div style="width: 120px; padding-left: 10px; padding-right: 10px; padding-top: 8px; padding-bottom: 8px; background: white; border-radius: 5px; justify-content: space-between; align-items: center; display: flex">
+                        <div style="justify-content: flex-start; align-items: center; gap: 5px; display: flex">
+                            <img style="width: 16px; height: 16px; background: #D9D9D9; border-radius: 9999px" src="/profile.svg" />
+                            <div style="color: var(--Dark-Grey-text-&-icons, #4C5563); font-size: 13px; font-family: Roboto; font-weight: 400; line-height: 15.40px; word-wrap: break-word">${lead.agent}</div>
+                        </div>
+                        <div style="width: 14px; height: 14px; position: relative; transform: rotate(180deg); transform-origin: top left; opacity: 0; overflow: hidden">
+                            <div style="width: 9.33px; height: 4.67px; left: 2.33px; top: 5.25px; position: absolute; outline: 1.17px var(--Dark-Grey-text-&-icons, #4C5563) solid; outline-offset: -0.58px"></div>
+                        </div>
+                    </div>
+                    <div data-property-1="no filter" style="width: 10px; justify-content: flex-start; align-items: center; gap: 8px; display: flex"></div>
+                    <div style="width: 100px; padding-left: 10px; padding-right: 10px; padding-top: 8px; padding-bottom: 8px; background: #F2F4F7; border-radius: 34px; justify-content: flex-start; align-items: center; gap: 5px; display: flex">
+                        <div style="width: 8px; height: 8px; background: ${lead.status?.toLowerCase() === 'contested' ? '#FF4D4D' : lead.status?.toLowerCase() === 'processed' ? '#55DD79' : '#FF9D00'}; border-radius: 9999px"></div>
+                        <div style="justify-content: flex-start; align-items: center; gap: 5px; display: flex">
+                            <div style="color: #4C5563; font-size: 13px; font-family: Roboto; font-weight: 600; line-height: 15.40px; word-wrap: break-word">${lead.status ? lead.status.charAt(0).toUpperCase() + lead.status.slice(1) : 'New Lead'}</div>
+                        </div>
+                    </div>
+                    <div data-property-1="no filter" style="width: 10px; justify-content: flex-start; align-items: center; gap: 8px; display: flex"></div>
+                    <div data-property-1="no filter" style="width: 160px; justify-content: flex-start; align-items: center; gap: 8px; display: flex">
+                        <div style="color: var(--Dark-Grey-text-&-icons, #4C5563); font-size: 13px; font-family: Roboto; font-weight: 400; word-wrap: break-word">${lead.campaign || '—'}</div>
+                    </div>
+                    <div data-property-1="no filter" style="width: 90px; justify-content: flex-start; align-items: center; gap: 8px; display: flex">
+                        <div style="color: var(--Dark-Grey-text-&-icons, #4C5563); font-size: 13px; font-family: Roboto; font-weight: 400; word-wrap: break-word">${lead.budget === 'OK' ? '—' : lead.budget || '—'}</div>
+                    </div>
+                    <div data-property-1="no filter" style="width: 90px; justify-content: flex-start; align-items: center; gap: 8px; display: flex">
+                        <div style="color: var(--Dark-Grey-text-&-icons, #4C5563); font-size: 13px; font-family: Roboto; font-weight: 400; word-wrap: break-word">${lead.timeline === 'OK' ? '—' : lead.timeline || '—'}</div>
+                    </div>
+                    <div data-property-1="no filter" style="width: 150px; justify-content: flex-start; align-items: center; gap: 8px; display: flex">
+                        <div style="color: var(--Dark-Grey-text-&-icons, #4C5563); font-size: 13px; font-family: Roboto; font-weight: 400; word-wrap: break-word">${lead.type === 'OK' ? '—' : lead.type || '—'}</div>
+                    </div>
+                    <div style="flex: 1 1 0; justify-content: flex-end; align-items: center; gap: 8px; display: flex">
+                        ${lead.status?.toLowerCase() !== 'contested' ? `
+                            <div onclick="openClaimPopup(${JSON.stringify(lead).replace(/"/g, '&quot;')})" style="width: 24px; height: 24px; position: relative; background: #F2F4F7; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center;">
+                                <div style="display: flex; gap: 2px;">
+                                    <div style="width: 3px; height: 3px; background: #65757D; border-radius: 50%;"></div>
+                                    <div style="width: 3px; height: 3px; background: #65757D; border-radius: 50%;"></div>
+                                    <div style="width: 3px; height: 3px; background: #65757D; border-radius: 50%;"></div>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
                 </div>
             </td>
-            <td class="px-6 py-4">
-                <span class="status-badge status-${lead.status.toLowerCase()}">${lead.status}</span>
-            </td>
-            <td class="px-6 py-4">${lead.campaign}</td>
-            <td class="px-6 py-4">${lead.budget}</td>
-            <td class="px-6 py-4">${lead.timeline}</td>
-            <td class="px-6 py-4">${lead.type}</td>
         </tr>
     `).join('');
 }
@@ -240,11 +116,134 @@ function updateAgentList() {
 
     const uniqueAgents = [...new Set(leads.map(lead => lead.agent))];
     agentList.innerHTML = uniqueAgents.map(agent => `
-        <button class="w-full px-4 py-2 text-left hover:bg-[#F9FAFB]" data-agent="${agent}">
+        <button class="w-full px-4 py-2 text-left hover:bg-gray-50" data-agent="${agent}">
             ${agent}
         </button>
     `).join('');
 }
+
+// Fonction pour charger les leads
+async function loadLeads() {
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const userEmail = urlParams.get('id');
+        
+        console.log('🔍 Chargement des leads...');
+        console.log('- URL actuelle:', window.location.href);
+        console.log('- Paramètres:', urlParams.toString());
+        console.log('- Email:', userEmail);
+        
+        if (!userEmail) {
+            console.log('❌ Pas d\'email fourni dans l\'URL');
+            return;
+        }
+        
+        const response = await fetch(`/api/leads?id=${encodeURIComponent(userEmail)}`);
+        console.log('🔍 Statut de la réponse:', response.status);
+        
+        if (!response.ok) {
+            const error = await response.json();
+            console.error('❌ Erreur API:', error);
+            throw new Error(error.error || 'Erreur lors du chargement des leads');
+        }
+        
+        const data = await response.json();
+        console.log('📊 Données reçues:', data);
+        
+        // Normaliser les statuts des leads
+        leads = data.map(lead => ({
+            ...lead,
+            status: lead.status?.toLowerCase() || 'new'
+        }));
+        
+        console.log('📊 Leads normalisés:', leads);
+        console.log('📊 Nombre de leads chargés:', leads.length);
+        
+        // Mettre à jour le compteur total de leads
+        const totalLeadsCounter = document.querySelector('.total-leads-counter');
+        if (totalLeadsCounter) {
+            totalLeadsCounter.textContent = leads.length;
+        }
+        
+        displayFilteredLeads();
+        updateAgentList();
+        
+    } catch (error) {
+        console.error('❌ Erreur:', error);
+        const tbody = document.getElementById('leadsTableBody');
+        if (tbody) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="8" class="text-center py-4 text-red-500">
+                        ${error.message}
+                    </td>
+                </tr>
+            `;
+        }
+    }
+}
+
+// Configuration des événements
+function setupEventListeners() {
+    // Filtres par statut
+    document.querySelectorAll('.filter-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-[#7F56D9]', 'text-white');
+                btn.classList.add('bg-white', 'text-[#101828]');
+            });
+            button.classList.remove('bg-white', 'text-[#101828]');
+            button.classList.add('bg-[#7F56D9]', 'text-white');
+            currentFilter = button.dataset.status;
+            displayFilteredLeads();
+        });
+    });
+
+    // Recherche
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            displayFilteredLeads();
+        });
+    }
+
+    // Filtrage par agent
+    const agentList = document.getElementById('agentList');
+    if (agentList) {
+        agentList.addEventListener('click', (event) => {
+            const agent = event.target.dataset.agent;
+            if (agent) {
+                currentAgentFilter = agent;
+                displayFilteredLeads();
+            }
+        });
+    }
+}
+
+// Initialisation au chargement de la page
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('🔄 Initialisation de l\'application...');
+    setupEventListeners();
+    loadLeads();
+});
+
+// Déclaration des types pour TypeScript
+window.filterLeads = function(status) {
+    currentFilter = status;
+    
+    // Mettre à jour les classes des boutons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('bg-[#7F56D9]', 'text-white');
+        btn.classList.add('bg-white', 'text-[#101828]');
+        
+        if (btn.dataset.status === status) {
+            btn.classList.remove('bg-white', 'text-[#101828]');
+            btn.classList.add('bg-[#7F56D9]', 'text-white');
+        }
+    });
+    
+    displayFilteredLeads();
+};
 
 // Fonction pour basculer le dropdown Assign to
 function toggleAssignToDropdown() {
@@ -264,49 +263,99 @@ function filterByAgent(agent) {
     displayFilteredLeads();
 }
 
-// Événements
-document.addEventListener('DOMContentLoaded', () => {
-    loadLeads();
+// Fonction pour ouvrir le popup de réclamation
+function openClaimPopup(lead) {
+    window.currentLead = lead; // Stocker le lead actuel
+    const popup = document.getElementById('claimPopup');
+    if (popup) {
+        popup.classList.remove('hidden');
+        // Mettre à jour les informations du lead dans le popup
+        const leadName = popup.querySelector('.lead-name');
+        const leadDate = popup.querySelector('.lead-date');
+        if (leadName) leadName.textContent = lead.contact;
+        if (leadDate) leadDate.textContent = new Date(lead.date || lead.created_at).toLocaleString('en-US', {
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        }) + ' (+04)';
+    }
+}
 
-    // Filtres par statut
-    document.querySelectorAll('.filter-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('bg-[#7F56D9]', 'text-white');
-                btn.classList.add('bg-white', 'text-[#101828]');
-            });
-            button.classList.remove('bg-white', 'text-[#101828]');
-            button.classList.add('bg-[#7F56D9]', 'text-white');
-            currentFilter = button.dataset.filter;
-            displayFilteredLeads();
+// Fonction pour fermer le popup de réclamation
+function closeClaimPopup() {
+    const popup = document.getElementById('claimPopup');
+    if (popup) {
+        popup.classList.add('hidden');
+    }
+}
+
+// Fonction pour soumettre une réclamation
+async function updateLeadStatus(leadId, status, reason, comment) {
+    try {
+        const response = await fetch('/api/leads/status', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                leadId,
+                status,
+                reason,
+                comment
+            })
         });
-    });
 
-    // Dropdown Assign to
-    const assignToBtn = document.getElementById('assignToBtn');
-    if (assignToBtn) {
-        assignToBtn.addEventListener('click', toggleAssignToDropdown);
+        if (!response.ok) {
+            throw new Error('Erreur lors de la mise à jour du statut');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Erreur:', error);
+        throw error;
+    }
+}
+
+function submitClaim() {
+    const details = document.getElementById('claimDetails').value;
+    const reason = document.querySelector('select').value;
+    
+    if (reason === 'Select a reason') {
+        alert('Veuillez sélectionner une raison pour votre réclamation');
+        return;
     }
 
-    // Clic en dehors du dropdown pour le fermer
-    document.addEventListener('click', (event) => {
-        const dropdown = document.getElementById('assignToDropdown');
-        const button = document.getElementById('assignToBtn');
-        if (dropdown && !dropdown.contains(event.target) && !button.contains(event.target)) {
-            dropdown.classList.add('hidden');
-        }
-    });
-
-    // Filtrage par agent
-    document.getElementById('agentList')?.addEventListener('click', (event) => {
-        if (event.target.dataset.agent) {
-            filterByAgent(event.target.dataset.agent);
-        }
-    });
-
-    // Recherche
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('input', displayFilteredLeads);
+    // Récupérer l'ID du lead actuel
+    const currentLead = window.currentLead;
+    if (!currentLead) {
+        console.error('Aucun lead sélectionné');
+        return;
     }
-}); 
+
+    // Mettre à jour le statut dans Airtable
+    updateLeadStatus(currentLead.id, 'contested', reason, details || '')
+        .then(() => {
+            // Fermer le popup de réclamation
+            closeClaimPopup();
+            
+            // Afficher le popup de succès
+            const successPopup = document.getElementById('claimSuccessPopup');
+            successPopup.classList.remove('hidden');
+
+            // Recharger les leads pour mettre à jour l'affichage
+            loadLeads();
+        })
+        .catch(error => {
+            console.error('Erreur lors de la mise à jour du statut:', error);
+            alert('Une erreur est survenue lors de la soumission du claim');
+        });
+}
+
+function closeSuccessPopup() {
+    const successPopup = document.getElementById('claimSuccessPopup');
+    successPopup.classList.add('hidden');
+}

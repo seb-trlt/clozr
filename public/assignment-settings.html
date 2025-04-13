@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clead - Assignment Settings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .campaign-section {
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            outline: 1px #D0D5DD solid;
+            outline-offset: -1px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            height: fit-content;
+            width: 100%;
+        }
+        .campaign-title {
+            color: #4C5563;
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: 0.20px;
+        }
+        .user-row {
+            width: 368px;
+            justify-content: space-between;
+            align-items: center;
+            display: flex;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .user-avatar {
+            width: 19px;
+            height: 19px;
+            background: #D9D9D9;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #4C5563;
+        }
+        .user-name {
+            color: #65757D;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 16.59px;
+        }
+        .percentage-controls {
+            width: 228px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .percentage-input-container {
+            width: 124px;
+            padding: 8px 15px;
+            background: white;
+            border-radius: 8px;
+            outline: 1px #D0D5DD solid;
+            outline-offset: -1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .adjust-button {
+            width: 14px;
+            height: 14px;
+            padding: 3px;
+            background: #EDF5FE;
+            border-radius: 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+        }
+        .adjust-button svg {
+            width: 8px;
+            height: 8px;
+            fill: #248EF3;
+        }
+        .percentage-value {
+            color: #4C5563;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 17.77px;
+        }
+        .monthly-leads {
+            color: #65757D;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.14px;
+        }
+        .distribution-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: auto;
+        }
+        .distribution-checkbox input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            border-radius: 2.8px;
+            outline: 1.4px #D0D5DD solid;
+            margin: 0;
+        }
+        .distribution-label {
+            color: #4C5563;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.14px;
+        }
+        .space-y-4 {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .settings-section {
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            outline: 1px #D0D5DD solid;
+            outline-offset: -1px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-bottom: 24px;
+        }
+        .settings-title {
+            color: #4C5563;
+            font-size: 20px;
+            font-family: Roboto;
+            font-weight: 500;
+            letter-spacing: 0.20px;
+        }
+        .info-box {
+            align-self: stretch;
+            padding: 20px 30px;
+            background: #EDF5FE;
+            border-radius: 10px;
+            outline: 1px #CEE2FA solid;
+            outline-offset: -1px;
+        }
+        .info-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        .info-icon {
+            width: 31px;
+            height: 31px;
+            flex-shrink: 0;
+        }
+        .info-icon svg {
+            width: 26px;
+            height: 26px;
+        }
+        .info-text {
+            flex: 1;
+            color: #248EF3;
+            font-size: 15px;
+            font-family: Roboto;
+            line-height: 20px;
+            letter-spacing: 0.15px;
+        }
+        .info-text p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Main header -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-start gap-[55px] h-16">
+                <div class="text-[25px] font-medium text-[#101828]">Clead</div>
+                <nav>
+                    <ul class="flex items-center gap-[45px]">
+                        <li><a href="/" class="text-[15px] font-medium text-[#4C5563]">Received Leads</a></li>
+                        <li><a href="/manage-package.html" class="text-[15px] font-medium text-[#4C5563]">Manage Lead Package</a></li>
+                        <li><a href="/assignment-settings.html" class="text-[15px] font-medium text-[#3FA1D9]">Assignment Settings</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Settings Header -->
+        <div class="settings-section">
+            <h1 class="settings-title">Settings</h1>
+            <div class="info-box">
+                <div class="info-content">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M23.25 13C23.25 18.6609 18.6609 23.25 13 23.25C7.33908 23.25 2.75 18.6609 2.75 13C2.75 7.33908 7.33908 2.75 13 2.75C18.6609 2.75 23.25 7.33908 23.25 13Z" fill="#248EF3"/>
+                            <path d="M13 8.125V13.8125M13 17.0625V17.875" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="info-text">
+                        <p class="font-semibold">You can adjust lead allocation at any time based on campaigns and team members.</p>
+                        <br/>
+                        <p class="font-semibold">Please note that any changes to allocation percentages will take effect immediately and apply only to the remaining leads in each active campaign.</p>
+                        <p class="italic">For example, if 85 out of 100 leads have already been assigned this month, changes will only impact the 15 remaining leads.</p>
+                        <br/>
+                        <p class="font-semibold">Leads are delivered Monday to Friday only.</p>
+                        <br/>
+                        <p>If a team member is unavailable (<span class="italic">e.g., on leave or vacation</span>), we recommend assigning them 0% so that all remaining leads are distributed among active users and processed efficiently.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Campaigns Grid -->
+        <div class="grid grid-cols-2 gap-6">
+            <!-- UAE Campaign -->
+            <div class="campaign-section">
+                <h2 class="campaign-title">UAE Campaign Lead Allocation</h2>
+                <div class="space-y-4">
+                    <div class="user-row">
+                        <div class="user-info">
+                            <div class="user-avatar">J</div>
+                            <span class="user-name">James</span>
+                        </div>
+                        <div class="percentage-controls">
+                            <div class="percentage-input-container">
+                                <button class="adjust-button" onclick="adjustPercentage('uae-james', -10)">
+                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
+                                </button>
+                                <span class="percentage-value" id="uae-james">0%</span>
+                                <button class="adjust-button" onclick="adjustPercentage('uae-james', 10)">
+                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
+                                </button>
+                            </div>
+                            <span class="monthly-leads">Monthly Leads</span>
+                        </div>
+                    </div>
+
+                    <div class="user-row">
+                        <div class="user-info">
+                            <div class="user-avatar">O</div>
+                            <span class="user-name">Omar</span>
+                        </div>
+                        <div class="percentage-controls">
+                            <div class="percentage-input-container">
+                                <button class="adjust-button" onclick="adjustPercentage('uae-omar', -10)">
+                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
+                                </button>
+                                <span class="percentage-value" id="uae-omar">100%</span>
+                                <button class="adjust-button" onclick="adjustPercentage('uae-omar', 10)">
+                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
+                                </button>
+                            </div>
+                            <span class="monthly-leads">Monthly Leads</span>
+                        </div>
+                    </div>
+
+                    <div class="user-row">
+                        <div class="user-info">
+                            <div class="user-avatar">S</div>
+                            <span class="user-name">Sarah</span>
+                        </div>
+                        <div class="percentage-controls">
+                            <div class="percentage-input-container">
+                                <button class="adjust-button" onclick="adjustPercentage('uae-sarah', -10)">
+                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
+                                </button>
+                                <span class="percentage-value" id="uae-sarah">0%</span>
+                                <button class="adjust-button" onclick="adjustPercentage('uae-sarah', 10)">
+                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
+                                </button>
+                            </div>
+                            <span class="monthly-leads">Monthly Leads</span>
+                        </div>
+                    </div>
+
+                    <div class="distribution-checkbox">
+                        <input type="checkbox" class="form-checkbox" onchange="toggleDistribution('uae')">
+                        <label class="distribution-label">Distribute equally among all users</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- France Campaign -->
+            <div class="campaign-section">
+                <h2 class="campaign-title">France Campaign Lead Allocation</h2>
+                <div class="space-y-4">
+                    <div class="user-row">
+                        <div class="user-info">
+                            <div class="user-avatar">J</div>
+                            <span class="user-name">James</span>
+                        </div>
+                        <div class="percentage-controls">
+                            <div class="percentage-input-container">
+                                <button class="adjust-button" onclick="adjustPercentage('france-james', -10)">
+                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
+                                </button>
+                                <span class="percentage-value" id="france-james">0%</span>
+                                <button class="adjust-button" onclick="adjustPercentage('france-james', 10)">
+                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
+                                </button>
+                            </div>
+                            <span class="monthly-leads">Monthly Leads</span>
+                        </div>
+                    </div>
+
+                    <div class="user-row">
+                        <div class="user-info">
+                            <div class="user-avatar">O</div>
+                            <span class="user-name">Omar</span>
+                        </div>
+                        <div class="percentage-controls">
+                            <div class="percentage-input-container">
+                                <button class="adjust-button" onclick="adjustPercentage('france-omar', -10)">
+                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
+                                </button>
+                                <span class="percentage-value" id="france-omar">0%</span>
+                                <button class="adjust-button" onclick="adjustPercentage('france-omar', 10)">
+                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
+                                </button>
+                            </div>
+                            <span class="monthly-leads">Monthly Leads</span>
+                        </div>
+                    </div>
+
+                    <div class="user-row">
+                        <div class="user-info">
+                            <div class="user-avatar">S</div>
+                            <span class="user-name">Sarah</span>
+                        </div>
+                        <div class="percentage-controls">
+                            <div class="percentage-input-container">
+                                <button class="adjust-button" onclick="adjustPercentage('france-sarah', -10)">
+                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
+                                </button>
+                                <span class="percentage-value" id="france-sarah">100%</span>
+                                <button class="adjust-button" onclick="adjustPercentage('france-sarah', 10)">
+                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
+                                </button>
+                            </div>
+                            <span class="monthly-leads">Monthly Leads</span>
+                        </div>
+                    </div>
+
+                    <div class="distribution-checkbox">
+                        <input type="checkbox" class="form-checkbox" onchange="toggleDistribution('france')">
+                        <label class="distribution-label">Distribute equally among all users</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UK Campaign -->
+            <div class="campaign-section">
+                <h2 class="campaign-title">UK Campaign Lead Allocation</h2>
+                <div class="space-y-4">
+                    <div class="user-row">
+                        <div class="user-info">
+                            <div class="user-avatar">J</div>
+                            <span class="user-name">James</span>
+                        </div>
+                        <div class="percentage-controls">
+                            <div class="percentage-input-container">
+                                <button class="adjust-button" onclick="adjustPercentage('uk-james', -10)">
+                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
+                                </button>
+                                <span class="percentage-value" id="uk-james">50%</span>
+                                <button class="adjust-button" onclick="adjustPercentage('uk-james', 10)">
+                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
+                                </button>
+                            </div>
+                            <span class="monthly-leads">Monthly Leads</span>
+                        </div>
+                    </div>
+
+                    <div class="user-row">
+                        <div class="user-info">
+                            <div class="user-avatar">O</div>
+                            <span class="user-name">Omar</span>
+                        </div>
+                        <div class="percentage-controls">
+                            <div class="percentage-input-container">
+                                <button class="adjust-button" onclick="adjustPercentage('uk-omar', -10)">
+                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
+                                </button>
+                                <span class="percentage-value" id="uk-omar">0%</span>
+                                <button class="adjust-button" onclick="adjustPercentage('uk-omar', 10)">
+                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
+                                </button>
+                            </div>
+                            <span class="monthly-leads">Monthly Leads</span>
+                        </div>
+                    </div>
+
+                    <div class="user-row">
+                        <div class="user-info">
+                            <div class="user-avatar">S</div>
+                            <span class="user-name">Sarah</span>
+                        </div>
+                        <div class="percentage-controls">
+                            <div class="percentage-input-container">
+                                <button class="adjust-button" onclick="adjustPercentage('uk-sarah', -10)">
+                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
+                                </button>
+                                <span class="percentage-value" id="uk-sarah">50%</span>
+                                <button class="adjust-button" onclick="adjustPercentage('uk-sarah', 10)">
+                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
+                                </button>
+                            </div>
+                            <span class="monthly-leads">Monthly Leads</span>
+                        </div>
+                    </div>
+
+                    <div class="distribution-checkbox">
+                        <input type="checkbox" class="form-checkbox" onchange="toggleDistribution('uk')">
+                        <label class="distribution-label">Distribute equally among all users</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Germany Campaign -->
+            <div class="campaign-section">
+                <h2 class="campaign-title">Germany Campaign Lead Allocation</h2>
+                <div class="space-y-4">
+                    <div class="user-row">
+                        <div class="user-info">
+                            <div class="user-avatar">J</div>
+                            <span class="user-name">James</span>
+                        </div>
+                        <div class="percentage-controls">
+                            <div class="percentage-input-container">
+                                <button class="adjust-button" onclick="adjustPercentage('germany-james', -10)">
+                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
+                                </button>
+                                <span class="percentage-value" id="germany-james">33%</span>
+                                <button class="adjust-button" onclick="adjustPercentage('germany-james', 10)">
+                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
+                                </button>
+                            </div>
+                            <span class="monthly-leads">Monthly Leads</span>
+                        </div>
+                    </div>
+
+                    <div class="user-row">
+                        <div class="user-info">
+                            <div class="user-avatar">O</div>
+                            <span class="user-name">Omar</span>
+                        </div>
+                        <div class="percentage-controls">
+                            <div class="percentage-input-container">
+                                <button class="adjust-button" onclick="adjustPercentage('germany-omar', -10)">
+                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
+                                </button>
+                                <span class="percentage-value" id="germany-omar">33%</span>
+                                <button class="adjust-button" onclick="adjustPercentage('germany-omar', 10)">
+                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
+                                </button>
+                            </div>
+                            <span class="monthly-leads">Monthly Leads</span>
+                        </div>
+                    </div>
+
+                    <div class="user-row">
+                        <div class="user-info">
+                            <div class="user-avatar">S</div>
+                            <span class="user-name">Sarah</span>
+                        </div>
+                        <div class="percentage-controls">
+                            <div class="percentage-input-container">
+                                <button class="adjust-button" onclick="adjustPercentage('germany-sarah', -10)">
+                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
+                                </button>
+                                <span class="percentage-value" id="germany-sarah">34%</span>
+                                <button class="adjust-button" onclick="adjustPercentage('germany-sarah', 10)">
+                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
+                                </button>
+                            </div>
+                            <span class="monthly-leads">Monthly Leads</span>
+                        </div>
+                    </div>
+
+                    <div class="distribution-checkbox">
+                        <input type="checkbox" class="form-checkbox" checked onchange="toggleDistribution('germany')">
+                        <label class="distribution-label">Distribute equally among all users</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const campaigns = {
+            uae: { james: 0, omar: 100, sarah: 0 },
+            france: { james: 0, omar: 0, sarah: 100 },
+            uk: { james: 50, omar: 0, sarah: 50 },
+            germany: { james: 33, omar: 33, sarah: 34 }
+        };
+
+        function adjustPercentage(id, change) {
+            const [campaign, user] = id.split('-');
+            const element = document.getElementById(id);
+            const currentValue = parseInt(element.textContent);
+            const newValue = Math.max(0, Math.min(100, currentValue + change));
+
+            // Calculer le total pour la campagne
+            const total = Object.keys(campaigns[campaign])
+                .reduce((sum, key) => {
+                    return sum + (key === user ? newValue : campaigns[campaign][key]);
+                }, 0);
+
+            // Vérifier que le total ne dépasse pas 100%
+            if (total > 100) return;
+
+            element.textContent = newValue + '%';
+            campaigns[campaign][user] = newValue;
+        }
+
+        function toggleDistribution(campaign) {
+            const users = Object.keys(campaigns[campaign]);
+            const equalShare = Math.floor(100 / users.length);
+            const remainder = 100 - (equalShare * users.length);
+
+            users.forEach((user, index) => {
+                const value = index === users.length - 1 ? equalShare + remainder : equalShare;
+                const element = document.getElementById(`${campaign}-${user}`);
+                element.textContent = value + '%';
+                campaigns[campaign][user] = value;
+            });
+        }
+
+        // Initialiser les valeurs au chargement
+        window.onload = function() {
+            Object.entries(campaigns).forEach(([campaign, users]) => {
+                Object.entries(users).forEach(([user, value]) => {
+                    const element = document.getElementById(`${campaign}-${user}`);
+                    if (element) {
+                        element.textContent = value + '%';
+                    }
+                });
+            });
+        };
+
+        // Fonction pour récupérer l'ID de l'URL
+        function getIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // Fonction pour mettre à jour les liens avec l'ID
+        function updateLinksWithId() {
+            const id = getIdFromUrl();
+            if (id) {
+                document.querySelectorAll('a').forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && !href.includes('?')) {
+                        link.href = `${href}?id=${id}`;
+                    }
+                });
+            }
+        }
+
+        // Mettre à jour les liens immédiatement
+        updateLinksWithId();
+        // Mettre à jour les liens après le chargement complet du DOM
+        document.addEventListener('DOMContentLoaded', updateLinksWithId);
+    </script>
+</body>
+</html> 
