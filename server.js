@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const Airtable = require('airtable');
@@ -20,8 +21,6 @@ app.use(express.json());
 
 // Servir les fichiers statiques
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/js', express.static(path.join(__dirname, 'public/js')));
-app.use('/css', express.static(path.join(__dirname, 'public')));
 
 // Fonction pour analyser la structure des champs
 async function analyzeAirtableStructure() {
