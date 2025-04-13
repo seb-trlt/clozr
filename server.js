@@ -20,7 +20,8 @@ const tableName = process.env.AIRTABLE_TABLE_NAME || 'tblcKOiISqb8Ic0c1';
 app.use(express.json());
 
 // Servir les fichiers statiques
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname)));
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 // Fonction pour analyser la structure des champs
 async function analyzeAirtableStructure() {
