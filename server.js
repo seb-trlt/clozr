@@ -150,6 +150,37 @@ app.post('/api/leads/status', async (req, res) => {
     }
 });
 
+// Endpoint pour récupérer les prix des campagnes
+app.get('/api/campaign-prices', async (req, res) => {
+    try {
+        console.log('🔍 Début de la récupération des prix des campagnes...');
+        const records = await base('Campaigns').select({
+            view: 'viw641o48FQXz2L93'
+        }).all();
+
+        console.log('📊 Nombre d\'enregistrements trouvés:', records.length);
+        
+        const prices = {};
+        records.forEach(record => {
+            const campaignName = record.get('Campaign Name');
+            const price = record.get('Default price per lead');
+            console.log(`📝 Campagne: ${campaignName}, Prix: ${price}`);
+            
+            if (campaignName && price) {
+                const key = campaignName.toLowerCase().replace(' campaign', '');
+                prices[key] = price;
+                console.log(`✅ Prix ajouté pour ${key}: ${price}`);
+            }
+        });
+
+        console.log('💰 Prix finaux:', prices);
+        res.json(prices);
+    } catch (error) {
+        console.error('❌ Erreur lors de la récupération des prix:', error);
+        res.status(500).json({ error: 'Erreur lors de la récupération des prix' });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Serveur démarré sur http://localhost:${port}`);
 }); 

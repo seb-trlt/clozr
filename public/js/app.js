@@ -122,6 +122,32 @@ function updateAgentList() {
     `).join('');
 }
 
+// Fonction pour mettre à jour le compteur de leads total
+function updateTotalLeadsCounter(count) {
+    const totalLeadsCounter = document.getElementById('totalLeadsCounter');
+    if (totalLeadsCounter) {
+        totalLeadsCounter.textContent = count;
+    }
+}
+
+// Fonction pour mettre à jour le compteur de leads restants
+function updateRemainingLeadsCounter(receivedCount) {
+    const remainingLeadsCounter = document.getElementById('remainingLeadsCounter');
+    if (remainingLeadsCounter) {
+        const monthlyOrder = 500; // Nombre de leads commandés par mois
+        const remaining = monthlyOrder - receivedCount;
+        remainingLeadsCounter.textContent = remaining > 0 ? remaining : 0;
+    }
+}
+
+// Fonction pour mettre à jour le compteur de leads dans la pagination
+function updateLeadsCount(count) {
+    const leadsCount = document.getElementById('leadsCount');
+    if (leadsCount) {
+        leadsCount.textContent = count;
+    }
+}
+
 // Fonction pour charger les leads
 async function loadLeads() {
     try {
@@ -135,6 +161,9 @@ async function loadLeads() {
         
         if (!userEmail) {
             console.log('❌ Pas d\'email fourni dans l\'URL');
+            updateTotalLeadsCounter(0);
+            updateRemainingLeadsCounter(0);
+            updateLeadsCount(0);
             return;
         }
         
@@ -144,6 +173,9 @@ async function loadLeads() {
         if (!response.ok) {
             const error = await response.json();
             console.error('❌ Erreur API:', error);
+            updateTotalLeadsCounter(0);
+            updateRemainingLeadsCounter(0);
+            updateLeadsCount(0);
             throw new Error(error.error || 'Erreur lors du chargement des leads');
         }
         
@@ -159,17 +191,19 @@ async function loadLeads() {
         console.log('📊 Leads normalisés:', leads);
         console.log('📊 Nombre de leads chargés:', leads.length);
         
-        // Mettre à jour le compteur total de leads
-        const totalLeadsCounter = document.querySelector('.total-leads-counter');
-        if (totalLeadsCounter) {
-            totalLeadsCounter.textContent = leads.length;
-        }
+        // Mettre à jour les compteurs
+        updateTotalLeadsCounter(leads.length || 0);
+        updateRemainingLeadsCounter(leads.length || 0);
+        updateLeadsCount(leads.length || 0);
         
         displayFilteredLeads();
         updateAgentList();
         
     } catch (error) {
         console.error('❌ Erreur:', error);
+        updateTotalLeadsCounter(0);
+        updateRemainingLeadsCounter(0);
+        updateLeadsCount(0);
         const tbody = document.getElementById('leadsTableBody');
         if (tbody) {
             tbody.innerHTML = `
