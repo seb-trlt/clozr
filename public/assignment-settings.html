@@ -33,11 +33,14 @@
             justify-content: space-between;
             align-items: center;
             display: flex;
+            gap: 10px;
         }
         .user-info {
             display: flex;
             align-items: center;
             gap: 5px;
+            min-width: 0;
+            flex: 1;
         }
         .user-avatar {
             width: 19px;
@@ -55,12 +58,17 @@
             font-size: 14px;
             font-weight: 500;
             line-height: 16.59px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 10px;
         }
         .percentage-controls {
             width: 228px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
         .percentage-input-container {
             width: 124px;
@@ -223,332 +231,158 @@
         </div>
 
         <!-- Campaigns Grid -->
-        <div class="grid grid-cols-2 gap-6">
-            <!-- UAE Campaign -->
-            <div class="campaign-section">
-                <h2 class="campaign-title">UAE Campaign Lead Allocation</h2>
-                <div class="space-y-4">
-                    <div class="user-row">
-                        <div class="user-info">
-                            <div class="user-avatar">J</div>
-                            <span class="user-name">James</span>
-                        </div>
-                        <div class="percentage-controls">
-                            <div class="percentage-input-container">
-                                <button class="adjust-button" onclick="adjustPercentage('uae-james', -10)">
-                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
-                                </button>
-                                <span class="percentage-value" id="uae-james">0%</span>
-                                <button class="adjust-button" onclick="adjustPercentage('uae-james', 10)">
-                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
-                                </button>
-                            </div>
-                            <span class="monthly-leads">Monthly Leads</span>
-                        </div>
-                    </div>
-
-                    <div class="user-row">
-                        <div class="user-info">
-                            <div class="user-avatar">O</div>
-                            <span class="user-name">Omar</span>
-                        </div>
-                        <div class="percentage-controls">
-                            <div class="percentage-input-container">
-                                <button class="adjust-button" onclick="adjustPercentage('uae-omar', -10)">
-                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
-                                </button>
-                                <span class="percentage-value" id="uae-omar">100%</span>
-                                <button class="adjust-button" onclick="adjustPercentage('uae-omar', 10)">
-                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
-                                </button>
-                            </div>
-                            <span class="monthly-leads">Monthly Leads</span>
-                        </div>
-                    </div>
-
-                    <div class="user-row">
-                        <div class="user-info">
-                            <div class="user-avatar">S</div>
-                            <span class="user-name">Sarah</span>
-                        </div>
-                        <div class="percentage-controls">
-                            <div class="percentage-input-container">
-                                <button class="adjust-button" onclick="adjustPercentage('uae-sarah', -10)">
-                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
-                                </button>
-                                <span class="percentage-value" id="uae-sarah">0%</span>
-                                <button class="adjust-button" onclick="adjustPercentage('uae-sarah', 10)">
-                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
-                                </button>
-                            </div>
-                            <span class="monthly-leads">Monthly Leads</span>
-                        </div>
-                    </div>
-
-                    <div class="distribution-checkbox">
-                        <input type="checkbox" class="form-checkbox" onchange="toggleDistribution('uae')">
-                        <label class="distribution-label">Distribute equally among all users</label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- France Campaign -->
-            <div class="campaign-section">
-                <h2 class="campaign-title">France Campaign Lead Allocation</h2>
-                <div class="space-y-4">
-                    <div class="user-row">
-                        <div class="user-info">
-                            <div class="user-avatar">J</div>
-                            <span class="user-name">James</span>
-                        </div>
-                        <div class="percentage-controls">
-                            <div class="percentage-input-container">
-                                <button class="adjust-button" onclick="adjustPercentage('france-james', -10)">
-                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
-                                </button>
-                                <span class="percentage-value" id="france-james">0%</span>
-                                <button class="adjust-button" onclick="adjustPercentage('france-james', 10)">
-                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
-                                </button>
-                            </div>
-                            <span class="monthly-leads">Monthly Leads</span>
-                        </div>
-                    </div>
-
-                    <div class="user-row">
-                        <div class="user-info">
-                            <div class="user-avatar">O</div>
-                            <span class="user-name">Omar</span>
-                        </div>
-                        <div class="percentage-controls">
-                            <div class="percentage-input-container">
-                                <button class="adjust-button" onclick="adjustPercentage('france-omar', -10)">
-                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
-                                </button>
-                                <span class="percentage-value" id="france-omar">0%</span>
-                                <button class="adjust-button" onclick="adjustPercentage('france-omar', 10)">
-                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
-                                </button>
-                            </div>
-                            <span class="monthly-leads">Monthly Leads</span>
-                        </div>
-                    </div>
-
-                    <div class="user-row">
-                        <div class="user-info">
-                            <div class="user-avatar">S</div>
-                            <span class="user-name">Sarah</span>
-                        </div>
-                        <div class="percentage-controls">
-                            <div class="percentage-input-container">
-                                <button class="adjust-button" onclick="adjustPercentage('france-sarah', -10)">
-                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
-                                </button>
-                                <span class="percentage-value" id="france-sarah">100%</span>
-                                <button class="adjust-button" onclick="adjustPercentage('france-sarah', 10)">
-                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
-                                </button>
-                            </div>
-                            <span class="monthly-leads">Monthly Leads</span>
-                        </div>
-                    </div>
-
-                    <div class="distribution-checkbox">
-                        <input type="checkbox" class="form-checkbox" onchange="toggleDistribution('france')">
-                        <label class="distribution-label">Distribute equally among all users</label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- UK Campaign -->
-            <div class="campaign-section">
-                <h2 class="campaign-title">UK Campaign Lead Allocation</h2>
-                <div class="space-y-4">
-                    <div class="user-row">
-                        <div class="user-info">
-                            <div class="user-avatar">J</div>
-                            <span class="user-name">James</span>
-                        </div>
-                        <div class="percentage-controls">
-                            <div class="percentage-input-container">
-                                <button class="adjust-button" onclick="adjustPercentage('uk-james', -10)">
-                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
-                                </button>
-                                <span class="percentage-value" id="uk-james">50%</span>
-                                <button class="adjust-button" onclick="adjustPercentage('uk-james', 10)">
-                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
-                                </button>
-                            </div>
-                            <span class="monthly-leads">Monthly Leads</span>
-                        </div>
-                    </div>
-
-                    <div class="user-row">
-                        <div class="user-info">
-                            <div class="user-avatar">O</div>
-                            <span class="user-name">Omar</span>
-                        </div>
-                        <div class="percentage-controls">
-                            <div class="percentage-input-container">
-                                <button class="adjust-button" onclick="adjustPercentage('uk-omar', -10)">
-                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
-                                </button>
-                                <span class="percentage-value" id="uk-omar">0%</span>
-                                <button class="adjust-button" onclick="adjustPercentage('uk-omar', 10)">
-                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
-                                </button>
-                            </div>
-                            <span class="monthly-leads">Monthly Leads</span>
-                        </div>
-                    </div>
-
-                    <div class="user-row">
-                        <div class="user-info">
-                            <div class="user-avatar">S</div>
-                            <span class="user-name">Sarah</span>
-                        </div>
-                        <div class="percentage-controls">
-                            <div class="percentage-input-container">
-                                <button class="adjust-button" onclick="adjustPercentage('uk-sarah', -10)">
-                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
-                                </button>
-                                <span class="percentage-value" id="uk-sarah">50%</span>
-                                <button class="adjust-button" onclick="adjustPercentage('uk-sarah', 10)">
-                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
-                                </button>
-                            </div>
-                            <span class="monthly-leads">Monthly Leads</span>
-                        </div>
-                    </div>
-
-                    <div class="distribution-checkbox">
-                        <input type="checkbox" class="form-checkbox" onchange="toggleDistribution('uk')">
-                        <label class="distribution-label">Distribute equally among all users</label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Germany Campaign -->
-            <div class="campaign-section">
-                <h2 class="campaign-title">Germany Campaign Lead Allocation</h2>
-                <div class="space-y-4">
-                    <div class="user-row">
-                        <div class="user-info">
-                            <div class="user-avatar">J</div>
-                            <span class="user-name">James</span>
-                        </div>
-                        <div class="percentage-controls">
-                            <div class="percentage-input-container">
-                                <button class="adjust-button" onclick="adjustPercentage('germany-james', -10)">
-                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
-                                </button>
-                                <span class="percentage-value" id="germany-james">33%</span>
-                                <button class="adjust-button" onclick="adjustPercentage('germany-james', 10)">
-                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
-                                </button>
-                            </div>
-                            <span class="monthly-leads">Monthly Leads</span>
-                        </div>
-                    </div>
-
-                    <div class="user-row">
-                        <div class="user-info">
-                            <div class="user-avatar">O</div>
-                            <span class="user-name">Omar</span>
-                        </div>
-                        <div class="percentage-controls">
-                            <div class="percentage-input-container">
-                                <button class="adjust-button" onclick="adjustPercentage('germany-omar', -10)">
-                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
-                                </button>
-                                <span class="percentage-value" id="germany-omar">33%</span>
-                                <button class="adjust-button" onclick="adjustPercentage('germany-omar', 10)">
-                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
-                                </button>
-                            </div>
-                            <span class="monthly-leads">Monthly Leads</span>
-                        </div>
-                    </div>
-
-                    <div class="user-row">
-                        <div class="user-info">
-                            <div class="user-avatar">S</div>
-                            <span class="user-name">Sarah</span>
-                        </div>
-                        <div class="percentage-controls">
-                            <div class="percentage-input-container">
-                                <button class="adjust-button" onclick="adjustPercentage('germany-sarah', -10)">
-                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"/></svg>
-                                </button>
-                                <span class="percentage-value" id="germany-sarah">34%</span>
-                                <button class="adjust-button" onclick="adjustPercentage('germany-sarah', 10)">
-                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"/></svg>
-                                </button>
-                            </div>
-                            <span class="monthly-leads">Monthly Leads</span>
-                        </div>
-                    </div>
-
-                    <div class="distribution-checkbox">
-                        <input type="checkbox" class="form-checkbox" checked onchange="toggleDistribution('germany')">
-                        <label class="distribution-label">Distribute equally among all users</label>
-                    </div>
-                </div>
-            </div>
+        <div class="grid grid-cols-2 gap-6" id="campaignsContainer">
+            <!-- Le contenu sera chargé dynamiquement ici -->
         </div>
     </div>
 
     <script>
-        const campaigns = {
-            uae: { james: 0, omar: 100, sarah: 0 },
-            france: { james: 0, omar: 0, sarah: 100 },
-            uk: { james: 50, omar: 0, sarah: 50 },
-            germany: { james: 33, omar: 33, sarah: 34 }
-        };
+        const campaigns = {};
 
-        function adjustPercentage(id, change) {
-            const [campaign, user] = id.split('-');
-            const element = document.getElementById(id);
+        async function adjustPercentage(id, change) {
+            console.log('🔄 [Assignment Settings] Début de adjustPercentage avec:', { id, change });
+            
+            const [campaignKey, userKey] = id.split('-');
+            console.log('🔍 [Assignment Settings] Clés extraites:', { campaignKey, userKey });
+            
+            // Trouver l'élément en utilisant l'attribut data
+            const element = document.querySelector(`[data-percentage-id="${id}"]`);
+            console.log('🔍 [Assignment Settings] Élément trouvé:', element);
+            
+            if (!element) {
+                console.error('❌ [Assignment Settings] Élément non trouvé avec data-percentage-id:', id);
+                return;
+            }
+            
             const currentValue = parseInt(element.textContent);
-            const newValue = Math.max(0, Math.min(100, currentValue + change));
+            console.log('🔍 [Assignment Settings] Valeur actuelle:', currentValue);
+            
+            // Calculer la nouvelle valeur
+            let newValue = Math.max(0, Math.min(100, currentValue + change));
+            
+            // Calculer le total actuel des autres utilisateurs
+            const otherUsersTotal = Object.keys(campaigns[campaignKey])
+                .filter(key => key !== userKey)
+                .reduce((sum, key) => sum + campaigns[campaignKey][key], 0);
+            
+            // Ajuster la nouvelle valeur pour que le total soit exactement 100
+            if (newValue + otherUsersTotal > 100) {
+                newValue = 100 - otherUsersTotal;
+            }
+            
+            console.log('🔍 [Assignment Settings] Nouvelle valeur calculée:', newValue);
 
-            // Calculer le total pour la campagne
-            const total = Object.keys(campaigns[campaign])
-                .reduce((sum, key) => {
-                    return sum + (key === user ? newValue : campaigns[campaign][key]);
-                }, 0);
-
-            // Vérifier que le total ne dépasse pas 100%
-            if (total > 100) return;
-
+            // Mettre à jour l'affichage et le stockage
             element.textContent = newValue + '%';
-            campaigns[campaign][user] = newValue;
+            campaigns[campaignKey][userKey] = newValue;
+
+            // Trouver le nom d'utilisateur original avec la bonne casse
+            const userRow = document.querySelector(`[data-user-id="${id}"]`);
+            console.log('🔍 [Assignment Settings] Ligne utilisateur trouvée:', userRow);
+            
+            if (!userRow) {
+                console.error('❌ [Assignment Settings] Ligne utilisateur non trouvée avec data-user-id:', id);
+                return;
+            }
+            
+            const userNameElement = userRow.querySelector('.user-name');
+            console.log('🔍 [Assignment Settings] Élément nom utilisateur trouvé:', userNameElement);
+            
+            if (!userNameElement) {
+                console.error('❌ [Assignment Settings] Élément nom utilisateur non trouvé');
+                return;
+            }
+            
+            const originalUserName = userNameElement.textContent;
+            console.log('🔍 [Assignment Settings] Nom utilisateur original:', originalUserName);
+
+            // Mettre à jour le pourcentage dans Airtable
+            try {
+                const email = getIdFromUrl();
+                // Convertir la clé de campagne en nom complet (ex: 'france' -> 'France Campaign')
+                const campaignName = campaignKey.charAt(0).toUpperCase() + campaignKey.slice(1) + ' Campaign';
+                console.log('🔍 [Assignment Settings] Données pour la mise à jour:', {
+                    email,
+                    campaignName,
+                    originalUserName,
+                    newValue
+                });
+                
+                const response = await fetch('/api/update-percentage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email,
+                        campaignName,
+                        userName: originalUserName,
+                        percentage: newValue
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la mise à jour');
+                }
+
+                console.log('✅ [Assignment Settings] Pourcentage mis à jour avec succès dans Airtable');
+            } catch (error) {
+                console.error('❌ [Assignment Settings] Erreur lors de la mise à jour du pourcentage:', error);
+                // Revenir à l'ancienne valeur en cas d'erreur
+                element.textContent = currentValue + '%';
+                campaigns[campaignKey][userKey] = currentValue;
+            }
         }
 
-        function toggleDistribution(campaign) {
+        async function toggleDistribution(campaign) {
             const users = Object.keys(campaigns[campaign]);
             const equalShare = Math.floor(100 / users.length);
             const remainder = 100 - (equalShare * users.length);
 
-            users.forEach((user, index) => {
+            // Mettre à jour tous les pourcentages en une seule fois
+            const updates = users.map(async (user, index) => {
                 const value = index === users.length - 1 ? equalShare + remainder : equalShare;
-                const element = document.getElementById(`${campaign}-${user}`);
-                element.textContent = value + '%';
-                campaigns[campaign][user] = value;
-            });
-        }
+                const id = `${campaign}-${user}`;
+                const element = document.querySelector(`[data-percentage-id="${id}"]`);
+                if (element) {
+                    element.textContent = value + '%';
+                    campaigns[campaign][user] = value;
 
-        // Initialiser les valeurs au chargement
-        window.onload = function() {
-            Object.entries(campaigns).forEach(([campaign, users]) => {
-                Object.entries(users).forEach(([user, value]) => {
-                    const element = document.getElementById(`${campaign}-${user}`);
-                    if (element) {
-                        element.textContent = value + '%';
+                    // Trouver le nom d'utilisateur original
+                    const userRow = document.querySelector(`[data-user-id="${id}"]`);
+                    const userNameElement = userRow?.querySelector('.user-name');
+                    if (!userNameElement) return;
+
+                    const originalUserName = userNameElement.textContent;
+                    const email = getIdFromUrl();
+                    const campaignName = campaign.charAt(0).toUpperCase() + campaign.slice(1) + ' Campaign';
+
+                    try {
+                        const response = await fetch('/api/update-percentage', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                email,
+                                campaignName,
+                                userName: originalUserName,
+                                percentage: value
+                            })
+                        });
+
+                        if (!response.ok) {
+                            throw new Error('Erreur lors de la mise à jour');
+                        }
+                    } catch (error) {
+                        console.error('❌ Erreur lors de la mise à jour du pourcentage:', error);
+                        // Revenir à l'ancienne valeur en cas d'erreur
+                        element.textContent = campaigns[campaign][user] + '%';
                     }
-                });
+                }
             });
-        };
+
+            // Attendre que toutes les mises à jour soient terminées
+            await Promise.all(updates);
+        }
 
         // Fonction pour récupérer l'ID de l'URL
         function getIdFromUrl() {
@@ -569,10 +403,169 @@
             }
         }
 
-        // Mettre à jour les liens immédiatement
-        updateLinksWithId();
-        // Mettre à jour les liens après le chargement complet du DOM
-        document.addEventListener('DOMContentLoaded', updateLinksWithId);
+        // Fonction pour récupérer les informations de l'utilisateur
+        async function fetchUserInfo() {
+            try {
+                const email = getIdFromUrl();
+                console.log('🔄 Récupération des informations pour:', email);
+                
+                const response = await fetch(`/api/user-info?email=${email}`);
+                const userInfo = await response.json();
+                
+                console.log('📊 Informations utilisateur reçues:', userInfo);
+                
+                // Mettre à jour l'affichage avec les informations de l'utilisateur
+                const userInfoElements = document.querySelectorAll('.user-info');
+                userInfoElements.forEach(element => {
+                    const field = element.getAttribute('data-field');
+                    if (userInfo[field]) {
+                        element.textContent = userInfo[field];
+                    }
+                });
+                
+                return userInfo;
+            } catch (error) {
+                console.error('❌ Erreur lors de la récupération des informations utilisateur:', error);
+            }
+        }
+
+        // Mettre à jour les liens et les informations utilisateur au chargement de la page
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('📄 DOM chargé, mise à jour des liens et des informations utilisateur...');
+            updateLinksWithId();
+            await fetchUserInfo();
+            console.log('✅ Initialisation terminée');
+        });
+
+        // Fonction pour récupérer les campagnes actives depuis Airtable
+        async function fetchActiveCampaigns() {
+            try {
+                console.log('🔄 [Assignment Settings] Récupération des campagnes actives...');
+                const response = await fetch('/api/campaign-status');
+                const data = await response.json();
+                
+                console.log('📦 [Assignment Settings] Données reçues:', data);
+                
+                if (!Array.isArray(data)) {
+                    console.error('❌ [Assignment Settings] Les données ne sont pas un tableau');
+                    return [];
+                }
+
+                const activeCampaigns = data.filter(campaign => {
+                    const isActive = campaign.Status === 'Active';
+                    console.log(`🔍 [Assignment Settings] Vérification de ${campaign['Campaign Name']}:`, {
+                        status: campaign.Status,
+                        isActive: isActive
+                    });
+                    return isActive;
+                });
+
+                console.log('✅ [Assignment Settings] Campagnes actives trouvées:', activeCampaigns);
+                return activeCampaigns;
+            } catch (error) {
+                console.error('❌ [Assignment Settings] Erreur lors de la récupération des campagnes:', error);
+                return [];
+            }
+        }
+
+        // Fonction pour créer une section de campagne
+        async function createCampaignSection(campaign) {
+            const campaignName = campaign['Campaign Name'];
+            const campaignKey = campaignName.toLowerCase().replace(' campaign', '');
+            
+            // Récupérer les informations des utilisateurs
+            const email = getIdFromUrl();
+            const response = await fetch(`/api/user-info?email=${email}`);
+            const usersInfo = await response.json();
+            
+            console.log('📊 [Assignment Settings] Informations utilisateurs pour la campagne:', {
+                campaignName,
+                campaignKey,
+                usersInfo
+            });
+            
+            // Initialiser les pourcentages pour cette campagne
+            campaigns[campaignKey] = {};
+            
+            // Récupérer les utilisateurs pour cette campagne en utilisant le nom exact de la campagne
+            const campaignUsers = usersInfo[campaignName] || [];
+            
+            console.log('📊 [Assignment Settings] Utilisateurs trouvés pour la campagne:', {
+                campaignName,
+                campaignUsers
+            });
+            
+            const userRows = campaignUsers.map(user => {
+                const userKey = user.name.toLowerCase();
+                const rowId = `${campaignKey}-${userKey}`;
+                campaigns[campaignKey][userKey] = user.percentage || 0;
+                
+                return `
+                    <div class="user-row" data-user-id="${rowId}">
+                        <div class="user-info">
+                            <div class="user-avatar">${user.name.charAt(0)}</div>
+                            <span class="user-name">${user.name}</span>
+                        </div>
+                        <div class="percentage-controls">
+                            <div class="percentage-input-container">
+                                <button class="adjust-button" onclick="adjustPercentage('${rowId}', -1)">
+                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"></rect></svg>
+                                </button>
+                                <span class="percentage-value" data-percentage-id="${rowId}">${user.percentage || 0}%</span>
+                                <button class="adjust-button" onclick="adjustPercentage('${rowId}', 1)">
+                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"></path></svg>
+                                </button>
+                            </div>
+                            <span class="monthly-leads">Monthly Leads</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            return `
+                <div class="campaign-section">
+                    <h2 class="campaign-title">${campaignName} Lead Allocation</h2>
+                    <div class="space-y-4">
+                        ${userRows}
+                        <div class="distribution-checkbox">
+                            <input type="checkbox" class="form-checkbox" onchange="toggleDistribution('${campaignKey}')">
+                            <label class="distribution-label">Distribute equally among all users</label>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Fonction pour mettre à jour l'affichage des campagnes
+        async function updateCampaignsDisplay() {
+            try {
+                console.log('🔄 [Assignment Settings] Mise à jour de l\'affichage des campagnes...');
+                const campaignsContainer = document.getElementById('campaignsContainer');
+                if (!campaignsContainer) {
+                    console.error('❌ [Assignment Settings] Container des campagnes non trouvé');
+                    return;
+                }
+
+                const activeCampaigns = await fetchActiveCampaigns();
+                console.log('📊 [Assignment Settings] Campagnes actives à afficher:', activeCampaigns);
+
+                // Vider le conteneur
+                campaignsContainer.innerHTML = '';
+
+                // Ajouter chaque campagne active
+                for (const campaign of activeCampaigns) {
+                    const campaignSection = await createCampaignSection(campaign);
+                    campaignsContainer.innerHTML += campaignSection;
+                }
+
+                console.log('✅ [Assignment Settings] Affichage des campagnes mis à jour avec succès');
+            } catch (error) {
+                console.error('❌ [Assignment Settings] Erreur lors de la mise à jour de l\'affichage:', error);
+            }
+        }
+
+        // Mettre à jour l'affichage au chargement de la page
+        document.addEventListener('DOMContentLoaded', updateCampaignsDisplay);
     </script>
 </body>
 </html> 

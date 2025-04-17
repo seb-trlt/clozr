@@ -181,6 +181,166 @@ app.get('/api/campaign-prices', async (req, res) => {
     }
 });
 
+// Endpoint pour récupérer les statuts des campagnes
+app.get('/api/campaign-status', async (req, res) => {
+    try {
+        console.log('🔍 Début de la récupération des statuts des campagnes...');
+        const records = await base('Campaigns').select({
+            view: 'viw641o48FQXz2L93'
+        }).all();
+
+        console.log('📊 Nombre d\'enregistrements trouvés:', records.length);
+        
+        const campaigns = records.map(record => {
+            const campaignName = record.get('Campaign Name');
+            const status = record.get('Status');
+            const price = record.get('Default price per lead');
+            
+            console.log(`📝 Campagne: ${campaignName}, Statut: ${status}, Prix: ${price}`);
+            
+            return {
+                'Campaign Name': campaignName,
+                'Status': status,
+                'Default price per lead': price
+            };
+        });
+
+        console.log('📊 Campagnes récupérées:', JSON.stringify(campaigns, null, 2));
+        res.json(campaigns);
+    } catch (error) {
+        console.error('❌ Erreur lors de la récupération des statuts:', error);
+        res.status(500).json({ error: 'Erreur lors de la récupération des statuts' });
+    }
+});
+
+// Endpoint pour récupérer les informations de l'utilisateur
+app.get('/api/user-info', async (req, res) => {
+    try {
+        const { email } = req.query;
+        console.log('🔍 Recherche des informations pour l\'utilisateur:', email);
+
+        // Récupérer d'abord les campagnes pour avoir la correspondance ID -> Nom
+        const campaignRecords = await base('Campaigns').select({
+            view: 'viw641o48FQXz2L93'
+        }).all();
+        
+        const campaignMap = {};
+        campaignRecords.forEach(record => {
+            campaignMap[record.id] = record.get('Campaign Name');
+        });
+
+        const records = await base('tblXkF8FJy5tKFFxC').select({
+            view: 'viwUHUxKFjqekH91n'
+        }).all();
+
+        // Créer un objet pour stocker les informations des utilisateurs
+        const usersInfo = {};
+
+        records.forEach(record => {
+            const usersAdmin = record.fields['Users Admin'] || '';
+            const emails = usersAdmin.split(',').map(e => e.trim().toLowerCase());
+            
+            if (emails.includes(email.toLowerCase())) {
+                const userName = record.fields['User Name'];
+                const leadRepartition = parseFloat(record.fields['Lead repartition']) || 0;
+                const campaignId = record.fields['Campaign'];
+                const campaignName = campaignMap[campaignId];
+                
+                // Convertir le pourcentage en valeur entière (multiplier par 100)
+                const percentage = Math.round(leadRepartition * 100);
+                
+                console.log(`📊 Utilisateur: ${userName}, Répartition: ${percentage}%, Campagne: ${campaignName} (ID: ${campaignId})`);
+                
+                if (userName && campaignName) {
+                    if (!usersInfo[campaignName]) {
+                        usersInfo[campaignName] = [];
+                    }
+                    usersInfo[campaignName].push({
+                        name: userName,
+                        percentage: percentage
+                    });
+                }
+            }
+        });
+
+        console.log('✅ Informations utilisateurs trouvées:', JSON.stringify(usersInfo, null, 2));
+        res.json(usersInfo);
+    } catch (error) {
+        console.error('❌ Erreur lors de la récupération des informations utilisateur:', error);
+        res.status(500).json({ error: 'Erreur serveur' });
+    }
+});
+
+// Endpoint pour mettre à jour les pourcentages de répartition
+app.post('/api/update-percentage', async (req, res) => {
+    try {
+        const { email, campaignName, userName, percentage } = req.body;
+        
+        // Normaliser le nom de la campagne
+        const normalizedCampaignName = campaignName
+            .replace('Uk', 'UK')
+            .replace('Uae', 'UAE')
+            .replace('uk', 'UK')
+            .replace('uae', 'UAE');
+
+        console.log('🔄 Mise à jour du pourcentage:', { 
+            email, 
+            campaignName: normalizedCampaignName, 
+            userName, 
+            percentage
+        });
+
+        // Rechercher l'enregistrement à mettre à jour directement avec le nom de la campagne
+        const records = await base('tblXkF8FJy5tKFFxC').select({
+            view: 'viwUHUxKFjqekH91n',
+            filterByFormula: `AND(
+                FIND('${email}', {Users Admin}) > 0,
+                FIND('${normalizedCampaignName}', {Campaign}) > 0,
+                FIND('${userName}', {User Name}) > 0
+            )`
+        }).all();
+
+        // Afficher tous les enregistrements trouvés pour debug
+        console.log('🔍 Tous les enregistrements trouvés:');
+        records.forEach(record => {
+            console.log({
+                id: record.id,
+                campaign: record.get('Campaign'),
+                campaignExact: `"${record.get('Campaign')}"`,
+                campaignLength: record.get('Campaign')?.length,
+                userName: record.get('User Name'),
+                usersAdmin: record.get('Users Admin')
+            });
+        });
+
+        console.log('🔍 Recherche de l\'enregistrement avec les critères:', {
+            email,
+            campaignName: normalizedCampaignName,
+            userName,
+            nombreEnregistrements: records.length
+        });
+
+        if (records.length === 0) {
+            console.error('❌ Aucun enregistrement trouvé pour la mise à jour');
+            return res.status(404).json({ error: 'Enregistrement non trouvé' });
+        }
+
+        // Mettre à jour l'enregistrement
+        const record = records[0];
+        console.log('📝 Enregistrement trouvé:', record.id);
+        
+        const updatedRecord = await base('tblXkF8FJy5tKFFxC').update(record.id, {
+            'Lead repartition': percentage / 100 // Convertir en décimal
+        });
+
+        console.log('✅ Enregistrement mis à jour:', updatedRecord);
+        res.json({ success: true, record: updatedRecord });
+    } catch (error) {
+        console.error('❌ Erreur lors de la mise à jour:', error);
+        res.status(500).json({ error: 'Erreur lors de la mise à jour' });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Serveur démarré sur http://localhost:${port}`);
 }); 

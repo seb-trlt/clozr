@@ -50,52 +50,12 @@
                     You can increase or decrease your total monthly Lead Package by adjusting the number of leads per campaign in increments of 50. Please note that the minimum Lead Package is 200 leads in total. If you wish to decrease your package below 200 leads per month or cancel your lead purchase subscription, please contact a representative.
                 </div>
             </div>
-            <div style="flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 15px; display: flex">
+            <div style="flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 15px; display: flex" id="campaignsContainer">
                 <div style="justify-content: flex-start; align-items: center; gap: 30px; display: inline-flex; border-bottom: 1px solid #E5E7EB; padding-bottom: 10px;">
                     <div style="width: 200px; justify-content: center; display: flex; flex-direction: column; color: rgba(101, 117, 125, 0.60); font-size: 14px; font-family: Roboto; font-weight: 500; letter-spacing: 0.14px; word-wrap: break-word">Campaign</div>
                     <div style="width: 124px; justify-content: center; display: flex; flex-direction: column; color: rgba(101, 117, 125, 0.60); font-size: 14px; font-family: Roboto; font-weight: 500; letter-spacing: 0.14px; word-wrap: break-word">Order Quantity</div>
                     <div style="width: 80px; justify-content: center; display: flex; flex-direction: column; color: rgba(101, 117, 125, 0.60); font-size: 14px; font-family: Roboto; font-weight: 500; letter-spacing: 0.14px; word-wrap: break-word">Unit Price</div>
                     <div style="width: 80px; justify-content: center; display: flex; flex-direction: column; color: rgba(101, 117, 125, 0.60); font-size: 14px; font-family: Roboto; font-weight: 500; letter-spacing: 0.14px; word-wrap: break-word">Sub-Total</div>
-                </div>
-                <div style="justify-content: flex-start; align-items: center; gap: 30px; display: inline-flex; border-bottom: 1px solid #E5E7EB; padding: 15px 0;" class="campaign-row">
-                    <div style="width: 200px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 500; letter-spacing: 0.14px; word-wrap: break-word">France Campaign</div>
-                    <div style="width: 124px; padding-left: 15px; padding-right: 15px; padding-top: 8px; padding-bottom: 8px; background: white; border-radius: 8px; outline: 1px #D0D5DD solid; outline-offset: -1px; justify-content: space-between; align-items: center; display: flex">
-                        <div onclick="decrementValue(this, 'france')" style="width: 14px; height: 14px; padding: 3px; background: #EDF5FE; overflow: hidden; border-radius: 3px; justify-content: center; align-items: center; gap: 10px; display: flex; cursor: pointer; color: #248EF3; font-size: 12px; font-family: Roboto; font-weight: 400; line-height: 14px;">-</div>
-                        <div style="color: var(--Dark-Grey-text-&-icons, #4C5563); font-size: 15px; font-family: Roboto; font-weight: 400; line-height: 17.77px; word-wrap: break-word" class="quantity-value">0</div>
-                        <div onclick="incrementValue(this, 'france')" style="width: 14px; height: 14px; padding: 3px; background: #EDF5FE; overflow: hidden; border-radius: 3px; justify-content: center; align-items: center; gap: 10px; display: flex; cursor: pointer; color: #248EF3; font-size: 12px; font-family: Roboto; font-weight: 400; line-height: 14px;">+</div>
-                    </div>
-                    <div style="width: 80px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">AED 0</div>
-                    <div style="width: 80px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">AED 0</div>
-                </div>
-                <div style="justify-content: flex-start; align-items: center; gap: 30px; display: inline-flex; border-bottom: 1px solid #E5E7EB; padding: 15px 0;" class="campaign-row">
-                    <div style="width: 200px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 500; letter-spacing: 0.14px; word-wrap: break-word">UAE Campaign</div>
-                    <div style="width: 124px; padding-left: 15px; padding-right: 15px; padding-top: 8px; padding-bottom: 8px; background: white; border-radius: 8px; outline: 1px #D0D5DD solid; outline-offset: -1px; justify-content: space-between; align-items: center; display: flex">
-                        <div onclick="decrementValue(this, 'uae')" style="width: 14px; height: 14px; padding: 3px; background: #EDF5FE; overflow: hidden; border-radius: 3px; justify-content: center; align-items: center; gap: 10px; display: flex; cursor: pointer; color: #248EF3; font-size: 12px; font-family: Roboto; font-weight: 400; line-height: 14px;">-</div>
-                        <div style="color: var(--Dark-Grey-text-&-icons, #4C5563); font-size: 15px; font-family: Roboto; font-weight: 400; line-height: 17.77px; word-wrap: break-word" class="quantity-value">0</div>
-                        <div onclick="incrementValue(this, 'uae')" style="width: 14px; height: 14px; padding: 3px; background: #EDF5FE; overflow: hidden; border-radius: 3px; justify-content: center; align-items: center; gap: 10px; display: flex; cursor: pointer; color: #248EF3; font-size: 12px; font-family: Roboto; font-weight: 400; line-height: 14px;">+</div>
-                    </div>
-                    <div style="width: 80px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">AED 0</div>
-                    <div style="width: 80px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">AED 0</div>
-                </div>
-                <div style="justify-content: flex-start; align-items: center; gap: 30px; display: inline-flex; border-bottom: 1px solid #E5E7EB; padding: 15px 0;" class="campaign-row">
-                    <div style="width: 200px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 500; letter-spacing: 0.14px; word-wrap: break-word">UK Campaign</div>
-                    <div style="width: 124px; padding-left: 15px; padding-right: 15px; padding-top: 8px; padding-bottom: 8px; background: white; border-radius: 8px; outline: 1px #D0D5DD solid; outline-offset: -1px; justify-content: space-between; align-items: center; display: flex">
-                        <div onclick="decrementValue(this, 'uk')" style="width: 14px; height: 14px; padding: 3px; background: #EDF5FE; overflow: hidden; border-radius: 3px; justify-content: center; align-items: center; gap: 10px; display: flex; cursor: pointer; color: #248EF3; font-size: 12px; font-family: Roboto; font-weight: 400; line-height: 14px;">-</div>
-                        <div style="color: var(--Dark-Grey-text-&-icons, #4C5563); font-size: 15px; font-family: Roboto; font-weight: 400; line-height: 17.77px; word-wrap: break-word" class="quantity-value">0</div>
-                        <div onclick="incrementValue(this, 'uk')" style="width: 14px; height: 14px; padding: 3px; background: #EDF5FE; overflow: hidden; border-radius: 3px; justify-content: center; align-items: center; gap: 10px; display: flex; cursor: pointer; color: #248EF3; font-size: 12px; font-family: Roboto; font-weight: 400; line-height: 14px;">+</div>
-                    </div>
-                    <div style="width: 80px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">AED 0</div>
-                    <div style="width: 80px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">AED 0</div>
-                </div>
-                <div style="justify-content: flex-start; align-items: center; gap: 30px; display: inline-flex; border-bottom: 1px solid #E5E7EB; padding: 15px 0;" class="campaign-row">
-                    <div style="width: 200px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 500; letter-spacing: 0.14px; word-wrap: break-word">Germany Campaign</div>
-                    <div style="width: 124px; padding-left: 15px; padding-right: 15px; padding-top: 8px; padding-bottom: 8px; background: white; border-radius: 8px; outline: 1px #D0D5DD solid; outline-offset: -1px; justify-content: space-between; align-items: center; display: flex">
-                        <div onclick="decrementValue(this, 'germany')" style="width: 14px; height: 14px; padding: 3px; background: #EDF5FE; overflow: hidden; border-radius: 3px; justify-content: center; align-items: center; gap: 10px; display: flex; cursor: pointer; color: #248EF3; font-size: 12px; font-family: Roboto; font-weight: 400; line-height: 14px;">-</div>
-                        <div style="color: var(--Dark-Grey-text-&-icons, #4C5563); font-size: 15px; font-family: Roboto; font-weight: 400; line-height: 17.77px; word-wrap: break-word" class="quantity-value">0</div>
-                        <div onclick="incrementValue(this, 'germany')" style="width: 14px; height: 14px; padding: 3px; background: #EDF5FE; overflow: hidden; border-radius: 3px; justify-content: center; align-items: center; gap: 10px; display: flex; cursor: pointer; color: #248EF3; font-size: 12px; font-family: Roboto; font-weight: 400; line-height: 14px;">+</div>
-                    </div>
-                    <div style="width: 80px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">AED 0</div>
-                    <div style="width: 80px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">AED 0</div>
                 </div>
             </div>
             <div style="justify-content: flex-start; align-items: center; gap: 20px; display: inline-flex">
@@ -243,114 +203,101 @@
             }
         }
 
-        // Fonction pour récupérer les statuts des campagnes
+        // Fonction pour récupérer les statuts des campagnes depuis Airtable
         async function fetchCampaignStatus() {
             try {
-                console.log('🔄 Début de la récupération des statuts des campagnes...');
-                
-                const response = await fetch('/api/campaign-prices');
-                console.log('📡 Réponse reçue:', response);
-                
-                if (!response.ok) {
-                    throw new Error(`Erreur HTTP: ${response.status}`);
-                }
-                
+                console.log('🔄 [Manage Lead Package] Début de la récupération des statuts des campagnes...');
+                const response = await fetch('/api/campaign-status');
                 const data = await response.json();
-                console.log('📦 Données brutes reçues de l\'API:', JSON.stringify(data, null, 2));
                 
-                // Vérifier la structure des données
-                if (!data || typeof data !== 'object') {
-                    console.error('❌ Format de données invalide');
+                console.log('📦 [Manage Lead Package] Données brutes reçues de l\'API:', JSON.stringify(data, null, 2));
+                
+                if (!Array.isArray(data)) {
+                    console.error('❌ [Manage Lead Package] Les données ne sont pas un tableau:', data);
                     return [];
                 }
-                
-                // Transformer les données en format attendu
-                const activeCampaigns = [];
-                
-                // Parcourir les campagnes
-                for (const [campaignName, campaignData] of Object.entries(data)) {
-                    console.log(`🔍 Analyse de la campagne ${campaignName}:`, campaignData);
-                    
-                    // Vérifier si la campagne est active
-                    const status = campaignData.status || campaignData.Status || 'Active';
-                    const price = campaignData.price || campaignData['Default price per lead'] || campaignData.Price;
-                    
-                    console.log(`📊 Statut: ${status}, Prix: ${price}`);
-                    
-                    if (status && status.toLowerCase() === 'active') {
-                        activeCampaigns.push({
-                            name: campaignName.replace(' Campaign', ''),
-                            status: status,
-                            price: price
+
+                const activeCampaigns = data
+                    .filter(campaign => {
+                        const isActive = campaign.Status === 'Active';
+                        console.log(`🔍 [Manage Lead Package] Vérification de ${campaign['Campaign Name']}:`, {
+                            status: campaign.Status,
+                            isActive: isActive,
+                            price: campaign['Default price per lead']
                         });
-                        console.log(`✅ Campagne ${campaignName} ajoutée comme active`);
-                    }
-                }
+                        return isActive;
+                    })
+                    .map(campaign => ({
+                        name: campaign['Campaign Name'].toLowerCase().replace(' campaign', ''),
+                        status: campaign.Status,
+                        price: parseFloat(campaign['Default price per lead']) || 0,
+                        'Campaign Name': campaign['Campaign Name'],
+                        'Default price per lead': campaign['Default price per lead']
+                    }));
                 
-                console.log('📊 Campagnes actives finales:', activeCampaigns);
+                console.log('📊 [Manage Lead Package] Campagnes actives filtrées:', activeCampaigns);
                 return activeCampaigns;
             } catch (error) {
-                console.error('❌ Erreur lors de la récupération des statuts:', error);
+                console.error('❌ [Manage Lead Package] Erreur lors de la récupération des statuts:', error);
                 return [];
             }
         }
 
+        // Fonction pour créer une section de campagne
+        function createCampaignSection(campaign) {
+            return `
+                <div class="campaign-row" style="justify-content: flex-start; align-items: center; gap: 30px; display: inline-flex; border-bottom: 1px solid #E5E7EB; padding: 15px 0;">
+                    <div style="width: 200px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 500; letter-spacing: 0.14px; word-wrap: break-word">${campaign['Campaign Name']}</div>
+                    <div style="width: 124px; padding-left: 15px; padding-right: 15px; padding-top: 8px; padding-bottom: 8px; background: white; border-radius: 8px; outline: 1px #D0D5DD solid; outline-offset: -1px; justify-content: space-between; align-items: center; display: flex">
+                        <div onclick="decrementValue(this, '${campaign.name}')" style="width: 14px; height: 14px; padding: 3px; background: #EDF5FE; overflow: hidden; border-radius: 3px; justify-content: center; align-items: center; gap: 10px; display: flex; cursor: pointer; color: #248EF3; font-size: 12px; font-family: Roboto; font-weight: 400; line-height: 14px;">-</div>
+                        <div style="color: var(--Dark-Grey-text-&-icons, #4C5563); font-size: 15px; font-family: Roboto; font-weight: 400; line-height: 17.77px; word-wrap: break-word" class="quantity-value">0</div>
+                        <div onclick="incrementValue(this, '${campaign.name}')" style="width: 14px; height: 14px; padding: 3px; background: #EDF5FE; overflow: hidden; border-radius: 3px; justify-content: center; align-items: center; gap: 10px; display: flex; cursor: pointer; color: #248EF3; font-size: 12px; font-family: Roboto; font-weight: 400; line-height: 14px;">+</div>
+                    </div>
+                    <div style="width: 80px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">AED ${campaign.price}</div>
+                    <div style="width: 80px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">AED 0</div>
+                </div>
+            `;
+        }
+
         // Fonction pour mettre à jour l'affichage des campagnes
         async function updateCampaignDisplay() {
-            const campaignsContainer = document.querySelector('div[style*="flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 15px; display: flex"]');
-            if (!campaignsContainer) {
-                console.error('❌ Container des campagnes non trouvé');
-                return;
-            }
-
             try {
-                // Masquer toutes les campagnes par défaut
-                const allCampaignRows = document.querySelectorAll('.campaign-row');
-                console.log('📋 Nombre total de lignes de campagne:', allCampaignRows.length);
-                
-                allCampaignRows.forEach((row) => {
-                    row.style.display = 'none';
-                });
+                console.log('🔄 [Manage Lead Package] Mise à jour de l\'affichage des campagnes...');
+                const campaignsContainer = document.getElementById('campaignsContainer');
+                if (!campaignsContainer) {
+                    console.error('❌ [Manage Lead Package] Container des campagnes non trouvé');
+                    return;
+                }
+
+                // Garder uniquement les titres des colonnes
+                const columnTitles = campaignsContainer.querySelector('div[style*="justify-content: flex-start; align-items: center; gap: 30px"]');
+                campaignsContainer.innerHTML = '';
+                campaignsContainer.appendChild(columnTitles);
 
                 const activeCampaigns = await fetchCampaignStatus();
-                console.log('📊 Campagnes actives à afficher:', activeCampaigns);
+                console.log('📊 [Manage Lead Package] Campagnes actives à afficher:', activeCampaigns);
 
-                // Afficher uniquement les campagnes actives
-                activeCampaigns.forEach((campaign) => {
-                    console.log('🎯 Traitement de la campagne active:', campaign);
-                    
-                    const campaignRows = document.querySelectorAll('.campaign-row');
-                    campaignRows.forEach((row) => {
-                        const campaignName = row.querySelector('div[style*="width: 200px"]').textContent;
-                        console.log('🔍 Comparaison:', campaignName, 'avec', campaign.name);
-                        
-                        if (campaignName.toLowerCase().includes(campaign.name.toLowerCase())) {
-                            console.log('✅ Correspondance trouvée pour:', campaign.name);
-                            row.style.display = 'inline-flex';
-                            
-                            // Mettre à jour le prix
-                            const priceElement = row.querySelector('div[style*="width: 80px"]:nth-child(3)');
-                            if (priceElement) {
-                                const price = parseFloat(campaign.price);
-                                console.log('💰 Mise à jour du prix pour', campaign.name, ':', price);
-                                priceElement.textContent = `AED ${price.toFixed(0)}`;
-                            } else {
-                                console.log('⚠️ Élément de prix non trouvé pour', campaign.name);
-                            }
-                        }
-                    });
+                // Ajouter chaque campagne active
+                activeCampaigns.forEach(campaign => {
+                    const campaignSection = createCampaignSection(campaign);
+                    campaignsContainer.innerHTML += campaignSection;
                 });
+
+                console.log('✅ [Manage Lead Package] Affichage des campagnes mis à jour avec succès');
             } catch (error) {
-                console.error('❌ Erreur lors de la mise à jour de l\'affichage:', error);
+                console.error('❌ [Manage Lead Package] Erreur lors de la mise à jour de l\'affichage:', error);
             }
         }
 
         // Mettre à jour les liens immédiatement et au chargement de la page
+        console.log('🔄 Initialisation de la page...');
         updateLinksWithId();
         document.addEventListener('DOMContentLoaded', async () => {
+            console.log('📄 DOM chargé, mise à jour des liens et des campagnes...');
             updateLinksWithId();
             await updateCampaignDisplay();
-            showCampaigns(); // Afficher les campagnes une fois le JavaScript chargé
+            showCampaigns();
+            console.log('✅ Initialisation terminée');
         });
 
         function incrementValue(button, campaign) {
