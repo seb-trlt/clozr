@@ -5,8 +5,11 @@
   "description": "Interface pour les agents immobiliers Dubai Land",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "echo 'No build step required'"
   },
   "dependencies": {
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.2"
   }
 } 
