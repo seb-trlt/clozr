@@ -1,0 +1,12 @@
+{
+  "name": "dubai-land-agents",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Interface pour les agents immobiliers Dubai Land",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+  }
+} 
