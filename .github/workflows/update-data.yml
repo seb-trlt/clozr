@@ -1,0 +1,38 @@
+name: Update DubaiLand Data
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Toutes les 6 heures
+  workflow_dispatch:  # Permet de déclencher manuellement
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Update data
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      run: node update-data.js
+      
+    - name: Notify on failure
+      if: failure()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: 'Échec de la mise à jour des données DubaiLand',
+            body: 'La mise à jour automatique des données a échoué. Veuillez vérifier les logs.'
+          }) 
