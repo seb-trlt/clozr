@@ -2,6 +2,7 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { initDB, saveBroker, getAllBrokers } from './db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -129,18 +130,6 @@ const cleanText = (text) => {
     return typeof text === 'string' ? text.replace(/\s+/g, ' ').trim() : '';
 };
 
-// Fonction pour lire le JSON existant et obtenir les cardNumber
-const readExistingCardNumbers = () => {
-    const filePath = path.join(__dirname, 'brokers.json');
-    if (fs.existsSync(filePath)) {
-        const data = fs.readFileSync(filePath, 'utf8');
-        const jsonData = JSON.parse(data);
-        const existingCardNumbers = jsonData.map(item => item.CardNumber);
-        return new Set(existingCardNumbers); // Utilisation d'un Set pour éviter les doublons
-    }
-    return new Set(); // Retourner un ensemble vide si le fichier n'existe pas
-};
-
 // Nouvelle fonction pour déterminer si un agent est CEO
 const isCEO = (officeNameEn, cardNumber, allAgents) => {
     // Filtrer tous les agents avec le même OfficeNameEn
@@ -193,49 +182,38 @@ async function extractEmailsFromWebsite(websiteUrl) {
 
 export async function fetchAndConvert() {
     try {
+        // Initialiser la base de données
+        await initDB();
+
+        // Récupérer les agents existants depuis la base de données
+        const existingAgents = await getAllBrokers();
+        const existingCardNumbers = new Set(existingAgents.map(agent => agent.CardNumber));
+
         console.log('\n📊 __ Je collecte les données de l\'API DubaiLand...');
-        const existingCardNumbers = readExistingCardNumbers();
-        
-        // Lire le fichier brokers.json existant pour la vérification CEO
-        const filePath = path.join(__dirname, 'brokers.json');
-        let existingAgents = [];
-        if (fs.existsSync(filePath)) {
-            const data = fs.readFileSync(filePath, 'utf8');
-            existingAgents = JSON.parse(data);
-        }
         
         let retryCount = 0;
         const maxRetries = 3;
         let response;
-        let lastError = null;
         
         while (retryCount < maxRetries) {
             try {
-                const url = "https://gateway.dubailand.gov.ae/brokers/?sortCriteria=2&pageIndex=0&pageSize=30000&consumer-id=gkb3WvEG0rY9eilwXC0P2pTz8UzvLj9F";
                 console.log(`\n🔄 Tentative ${retryCount + 1}/${maxRetries} de connexion à l'API...`);
-                
                 response = await axios.get(url, { 
                     headers: { Accept: "application/json" },
-                    timeout: 60000 // 60 secondes timeout
+                    timeout: 60000
                 });
                 break;
             } catch (error) {
                 retryCount++;
-                lastError = error;
-                const isServerError = error.response && (error.response.status >= 500 && error.response.status < 600);
                 if (retryCount === maxRetries) {
-                    const errorMessage = `Le serveur DubaiLand est temporairement indisponible (erreur ${error.response?.status || 'timeout'}). 
-                    Ce problème est courant car leur serveur est parfois capricieux. 
-                    Veuillez réessayer dans quelques minutes.`;
-                    throw new Error(errorMessage);
+                    throw new Error(`Le serveur DubaiLand est temporairement indisponible (erreur ${error.response?.status || 'timeout'})`);
                 }
-                const waitTime = isServerError ? 20000 : 10000; // 20 secondes pour les erreurs serveur, 10 pour les autres
-                console.log(`❌ Tentative ${retryCount}/${maxRetries} échouée (${error.message}), nouvelle tentative dans ${waitTime/1000} secondes...`);
-                await new Promise(resolve => setTimeout(resolve, waitTime));
+                console.log(`❌ Tentative ${retryCount}/${maxRetries} échouée, nouvelle tentative dans 10 secondes...`);
+                await new Promise(resolve => setTimeout(resolve, 10000));
             }
         }
 
-        if (!response || !response.data || !response.data.Response || !Array.isArray(response.data.Response)) {
+        if (!response?.data?.Response || !Array.isArray(response.data.Response)) {
             throw new Error("Format de réponse API invalide");
         }
 
@@ -244,39 +222,15 @@ export async function fetchAndConvert() {
         
         // Compter les nouveaux agents
         let newAgentsCount = 0;
-        const newAgents = [];
         
         for (const record of records) {
             const cardNumber = cleanText(record.CardNumber);
             if (!existingCardNumbers.has(cardNumber)) {
                 newAgentsCount++;
-                newAgents.push({
-                    cardNumber,
-                    name: cleanText(record.OfficeNameEn)
-                });
-            }
-        }
-        
-        // Afficher le résumé des nouveaux agents
-        console.log(`\n✨ __ Résumé des nouveaux agents trouvés : ${newAgentsCount}`);
-        if (newAgentsCount > 0) {
-            console.log('   Liste des nouveaux agents :');
-            newAgents.forEach((agent, index) => {
-                console.log(`   ${index + 1}. ${agent.name} (${agent.cardNumber})`);
-            });
-        }
-        
-        // Traiter chaque nouvel agent et mettre à jour immédiatement
-        let processedCount = 0;
-        for (const record of records) {
-            const cardNumber = cleanText(record.CardNumber);
-
-            if (!existingCardNumbers.has(cardNumber)) {
-                processedCount++;
-                console.log(`\n✨ Traitement du nouvel agent (${processedCount}/${newAgentsCount}) :`);
+                console.log(`\n✨ Traitement du nouvel agent (${newAgentsCount}/${records.length}) :`);
                 console.log(`   - CardNumber : ${cardNumber}`);
                 console.log(`   - Nom : ${cleanText(record.OfficeNameEn)}`);
-                
+
                 // Rechercher le site web
                 console.log(`🔍 Recherche du site web pour : ${record.OfficeNameEn}`);
                 const websiteData = await fetchWebsite(record.OfficeNameEn);
@@ -295,9 +249,8 @@ export async function fetchAndConvert() {
                 // Rechercher le profil LinkedIn
                 console.log(`🔍 Recherche du profil LinkedIn pour : ${record.CardHolderNameEn}`);
                 const linkedinData = await fetchLinkedIn(record.CardHolderNameEn, record.OfficeNameEn);
-                
-                const dataToSend = {
-                    // Données de base
+
+                const agentData = {
                     AwardsCount: cleanText(record.AwardsCount) || "--",
                     CardExpiryDate: cleanText(record.CardExpiryDate) || "--",
                     CardHolderEmail: cleanText(record.CardHolderEmail) || "--",
@@ -307,7 +260,7 @@ export async function fetchAndConvert() {
                     CardHolderPhone: cleanText(record.CardHolderPhone) || "--",
                     CardHolderPhoto: cleanText(record.CardHolderPhoto) || "--",
                     CardIssueDate: cleanText(record.CardIssueDate) || "--",
-                    CardNumber: cleanText(record.CardNumber) || "--",
+                    CardNumber: cardNumber || "--",
                     CardRank: cleanText(record.CardRank) || "--",
                     CardRankId: cleanText(record.CardRankId) || "--",
                     LicenseNumber: cleanText(record.LicenseNumber) || "--",
@@ -319,45 +272,31 @@ export async function fetchAndConvert() {
                     OfficeRank: cleanText(record.OfficeRank) || "--",
                     OfficeRankId: cleanText(record.OfficeRankId) || "--",
                     RealEstateNumber: cleanText(record.RealEstateNumber) || "--",
-                    RowIndex: cleanText(record.RowIndex) || "--",
-                    TotalRowsCount: cleanText(record.TotalRowsCount) || "--",
-                    dateAdded: new Date().toISOString().split('T')[0] || "--",
-                    isCEO: isCEO(cleanText(record.OfficeNameEn), cleanText(record.CardNumber), existingAgents) ? 'OUI' : 'NON',
-                    
-                    // Données du site web
+                    dateAdded: new Date().toISOString().split('T')[0],
+                    isCEO: isCEO(cleanText(record.OfficeNameEn), cardNumber, existingAgents) ? 'OUI' : 'NON',
                     website_url: websiteData?.website_url || "--",
                     website_title: websiteData?.website_title || "--",
                     website_snippet: websiteData?.website_snippet || "--",
                     website_emails: websiteEmails || "--",
-                    
-                    // Données Instagram
                     instagram_url: instagramData?.instagram_url || "--",
                     instagram_title: instagramData?.instagram_title || "--",
                     instagram_snippet: instagramData?.instagram_snippet || "--",
-                    
-                    // Données LinkedIn
                     linkedin_url: linkedinData?.linkedin_url || "--",
                     linkedin_title: linkedinData?.linkedin_title || "--",
                     linkedin_snippet: linkedinData?.linkedin_snippet || "--"
                 };
 
-                // Mettre à jour le JSON immédiatement
-                console.log('📝 Mise à jour du fichier JSON...');
-                existingAgents.push(dataToSend);
-                fs.writeFileSync(filePath, JSON.stringify(existingAgents, null, 2));
-                console.log('✅ JSON mis à jour avec succès');
+                // Sauvegarder dans la base de données
+                await saveBroker(cardNumber, agentData);
+                console.log(`✅ Agent ${agentData.CardHolderNameEn} (${cardNumber}) sauvegardé dans la base de données`);
 
-                // Envoyer les données au spreadsheet immédiatement
-                console.log('📊 Envoi des données au spreadsheet...');
-                await sendToWebhook(dataToSend);
-                console.log('✅ Données envoyées au spreadsheet avec succès');
-
-                // Ajouter le CardNumber aux existants
-                existingCardNumbers.add(cardNumber);
+                // Envoyer au spreadsheet
+                await sendToWebhook(agentData);
+                console.log(`✅ Données envoyées au spreadsheet`);
             }
         }
 
-        console.log(`\n✅ Traitement terminé : ${processedCount} nouveaux agents ont été ajoutés`);
+        console.log(`\n✅ Traitement terminé : ${newAgentsCount} nouveaux agents ont été ajoutés`);
     } catch (error) {
         console.error('Erreur:', error.message);
         throw error;

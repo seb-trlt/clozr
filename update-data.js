@@ -1,8 +1,10 @@
+import 'dotenv/config';
 import { fetchAndConvert } from './1.js';
 import { getAllBrokers } from './db.js';
 
 async function updateData() {
     console.log('🔄 Démarrage de la mise à jour des données...');
+    console.log('📊 Connexion à la base de données...');
     try {
         // Récupérer les données de DubaiLand
         await fetchAndConvert();

@@ -18,21 +18,30 @@ jobs:
         node-version: '18'
         
     - name: Install dependencies
+      working-directory: ./marketwise
       run: npm install
       
     - name: Update data
+      working-directory: ./marketwise
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      run: node update-data.js
+      run: |
+        echo "🔄 Démarrage de la mise à jour des données..."
+        node update-data.js
+        echo "✅ Mise à jour terminée"
       
     - name: Notify on failure
       if: failure()
       uses: actions/github-script@v6
       with:
         script: |
-          github.rest.issues.create({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            title: 'Échec de la mise à jour des données DubaiLand',
-            body: 'La mise à jour automatique des données a échoué. Veuillez vérifier les logs.'
-          }) 
+          try {
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Échec de la mise à jour des données DubaiLand',
+              body: 'La mise à jour automatique des données a échoué. Veuillez vérifier les logs.'
+            });
+          } catch (error) {
+            console.error('Erreur lors de la création de l\'issue:', error);
+          } 
