@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clead - Assignment Settings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .campaign-section {
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            outline: 1px #D0D5DD solid;
+            outline-offset: -1px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            height: fit-content;
+            width: 100%;
+        }
+        .campaign-title {
+            color: #4C5563;
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: 0.20px;
+        }
+        .user-row {
+            width: 368px;
+            justify-content: space-between;
+            align-items: center;
+            display: flex;
+            gap: 10px;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            min-width: 0;
+            flex: 1;
+        }
+        .user-avatar {
+            width: 19px;
+            height: 19px;
+            background: #D9D9D9;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #4C5563;
+        }
+        .user-name {
+            color: #65757D;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 16.59px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 10px;
+        }
+        .percentage-controls {
+            width: 228px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .percentage-input-container {
+            width: 124px;
+            padding: 8px 15px;
+            background: white;
+            border-radius: 8px;
+            outline: 1px #D0D5DD solid;
+            outline-offset: -1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .adjust-button {
+            width: 14px;
+            height: 14px;
+            padding: 3px;
+            background: #EDF5FE;
+            border-radius: 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+        }
+        .adjust-button svg {
+            width: 8px;
+            height: 8px;
+            fill: #248EF3;
+        }
+        .percentage-value {
+            color: #4C5563;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 17.77px;
+        }
+        .monthly-leads {
+            color: #65757D;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.14px;
+        }
+        .distribution-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: auto;
+        }
+        .distribution-checkbox input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            border-radius: 2.8px;
+            outline: 1.4px #D0D5DD solid;
+            margin: 0;
+        }
+        .distribution-label {
+            color: #4C5563;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.14px;
+        }
+        .space-y-4 {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .settings-section {
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            outline: 1px #D0D5DD solid;
+            outline-offset: -1px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-bottom: 24px;
+        }
+        .settings-title {
+            color: #4C5563;
+            font-size: 20px;
+            font-family: Roboto;
+            font-weight: 500;
+            letter-spacing: 0.20px;
+        }
+        .info-box {
+            align-self: stretch;
+            padding: 20px 30px;
+            background: #EDF5FE;
+            border-radius: 10px;
+            outline: 1px #CEE2FA solid;
+            outline-offset: -1px;
+        }
+        .info-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        .info-icon {
+            width: 31px;
+            height: 31px;
+            flex-shrink: 0;
+        }
+        .info-icon svg {
+            width: 26px;
+            height: 26px;
+        }
+        .info-text {
+            flex: 1;
+            color: #248EF3;
+            font-size: 15px;
+            font-family: Roboto;
+            line-height: 20px;
+            letter-spacing: 0.15px;
+        }
+        .info-text p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Main header -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-start gap-[55px] h-16">
+                <div class="text-[25px] font-medium text-[#101828]">Clead</div>
+                <nav>
+                    <ul class="flex items-center gap-[45px]">
+                        <li><a href="/" class="text-[15px] font-medium text-[#4C5563]">Received Leads</a></li>
+                        <li><a href="/manage-package.html" class="text-[15px] font-medium text-[#4C5563]">Manage Lead Package</a></li>
+                        <li><a href="/assignment-settings.html" class="text-[15px] font-medium text-[#3FA1D9]">Assignment Settings</a></li>
+                        <li><a href="/billing.html" class="text-[15px] font-medium text-[#4C5563]">Billing</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Settings Header -->
+        <div class="settings-section">
+            <h1 class="settings-title">Settings</h1>
+            <div class="info-box">
+                <div class="info-content">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M23.25 13C23.25 18.6609 18.6609 23.25 13 23.25C7.33908 23.25 2.75 18.6609 2.75 13C2.75 7.33908 7.33908 2.75 13 2.75C18.6609 2.75 23.25 7.33908 23.25 13Z" fill="#248EF3"/>
+                            <path d="M13 8.125V13.8125M13 17.0625V17.875" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="info-text">
+                        <p class="font-semibold">You can adjust lead allocation at any time based on campaigns and team members.</p>
+                        <br/>
+                        <p class="font-semibold">Please note that any changes to allocation percentages will take effect immediately and apply only to the remaining leads in each active campaign.</p>
+                        <p class="italic">For example, if 85 out of 100 leads have already been assigned this month, changes will only impact the 15 remaining leads.</p>
+                        <br/>
+                        <p class="font-semibold">Leads are delivered Monday to Friday only.</p>
+                        <br/>
+                        <p>If a team member is unavailable (<span class="italic">e.g., on leave or vacation</span>), we recommend assigning them 0% so that all remaining leads are distributed among active users and processed efficiently.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Campaigns Grid -->
+        <div class="grid grid-cols-2 gap-6" id="campaignsContainer">
+            <!-- Le contenu sera chargé dynamiquement ici -->
+        </div>
+    </div>
+
+    <script>
+        const campaigns = {};
+
+        async function adjustPercentage(id, change) {
+            console.log('🔄 [Assignment Settings] Début de adjustPercentage avec:', { id, change });
+            
+            const [campaignKey, userKey] = id.split('-');
+            console.log('🔍 [Assignment Settings] Clés extraites:', { campaignKey, userKey });
+            
+            // Trouver l'élément en utilisant l'attribut data
+            const element = document.querySelector(`[data-percentage-id="${id}"]`);
+            console.log('🔍 [Assignment Settings] Élément trouvé:', element);
+            
+            if (!element) {
+                console.error('❌ [Assignment Settings] Élément non trouvé avec data-percentage-id:', id);
+                return;
+            }
+            
+            const currentValue = parseInt(element.textContent);
+            console.log('🔍 [Assignment Settings] Valeur actuelle:', currentValue);
+            
+            // Calculer la nouvelle valeur
+            let newValue = Math.max(0, Math.min(100, currentValue + change));
+            
+            // Calculer le total actuel des autres utilisateurs
+            const otherUsersTotal = Object.keys(campaigns[campaignKey])
+                .filter(key => key !== userKey)
+                .reduce((sum, key) => sum + campaigns[campaignKey][key], 0);
+            
+            // Ajuster la nouvelle valeur pour que le total soit exactement 100
+            if (newValue + otherUsersTotal > 100) {
+                newValue = 100 - otherUsersTotal;
+            }
+            
+            console.log('🔍 [Assignment Settings] Nouvelle valeur calculée:', newValue);
+
+            // Mettre à jour l'affichage et le stockage
+            element.textContent = newValue + '%';
+            campaigns[campaignKey][userKey] = newValue;
+
+            // Trouver le nom d'utilisateur original avec la bonne casse
+            const userRow = document.querySelector(`[data-user-id="${id}"]`);
+            console.log('🔍 [Assignment Settings] Ligne utilisateur trouvée:', userRow);
+            
+            if (!userRow) {
+                console.error('❌ [Assignment Settings] Ligne utilisateur non trouvée avec data-user-id:', id);
+                return;
+            }
+            
+            const userNameElement = userRow.querySelector('.user-name');
+            console.log('🔍 [Assignment Settings] Élément nom utilisateur trouvé:', userNameElement);
+            
+            if (!userNameElement) {
+                console.error('❌ [Assignment Settings] Élément nom utilisateur non trouvé');
+                return;
+            }
+            
+            const originalUserName = userNameElement.textContent;
+            console.log('🔍 [Assignment Settings] Nom utilisateur original:', originalUserName);
+
+            // Mettre à jour le pourcentage dans Airtable
+            try {
+                const email = getIdFromUrl();
+                // Convertir la clé de campagne en nom complet (ex: 'france' -> 'France Campaign')
+                const campaignName = campaignKey.charAt(0).toUpperCase() + campaignKey.slice(1) + ' Campaign';
+                console.log('🔍 [Assignment Settings] Données pour la mise à jour:', {
+                    email,
+                    campaignName,
+                    originalUserName,
+                    newValue
+                });
+                
+                const response = await fetch('/api/update-percentage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email,
+                        campaignName,
+                        userName: originalUserName,
+                        percentage: newValue
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la mise à jour');
+                }
+
+                console.log('✅ [Assignment Settings] Pourcentage mis à jour avec succès dans Airtable');
+            } catch (error) {
+                console.error('❌ [Assignment Settings] Erreur lors de la mise à jour du pourcentage:', error);
+                // Revenir à l'ancienne valeur en cas d'erreur
+                element.textContent = currentValue + '%';
+                campaigns[campaignKey][userKey] = currentValue;
+            }
+        }
+
+        async function toggleDistribution(campaign) {
+            const users = Object.keys(campaigns[campaign]);
+            const equalShare = Math.floor(100 / users.length);
+            const remainder = 100 - (equalShare * users.length);
+
+            // Mettre à jour tous les pourcentages en une seule fois
+            const updates = users.map(async (user, index) => {
+                const value = index === users.length - 1 ? equalShare + remainder : equalShare;
+                const id = `${campaign}-${user}`;
+                const element = document.querySelector(`[data-percentage-id="${id}"]`);
+                if (element) {
+                    element.textContent = value + '%';
+                    campaigns[campaign][user] = value;
+
+                    // Trouver le nom d'utilisateur original
+                    const userRow = document.querySelector(`[data-user-id="${id}"]`);
+                    const userNameElement = userRow?.querySelector('.user-name');
+                    if (!userNameElement) return;
+
+                    const originalUserName = userNameElement.textContent;
+                    const email = getIdFromUrl();
+                    const campaignName = campaign.charAt(0).toUpperCase() + campaign.slice(1) + ' Campaign';
+
+                    try {
+                        const response = await fetch('/api/update-percentage', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                email,
+                                campaignName,
+                                userName: originalUserName,
+                                percentage: value
+                            })
+                        });
+
+                        if (!response.ok) {
+                            throw new Error('Erreur lors de la mise à jour');
+                        }
+                    } catch (error) {
+                        console.error('❌ Erreur lors de la mise à jour du pourcentage:', error);
+                        // Revenir à l'ancienne valeur en cas d'erreur
+                        element.textContent = campaigns[campaign][user] + '%';
+                    }
+                }
+            });
+
+            // Attendre que toutes les mises à jour soient terminées
+            await Promise.all(updates);
+        }
+
+        // Fonction pour récupérer l'ID de l'URL
+        function getIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // Fonction pour mettre à jour les liens avec l'ID
+        function updateLinksWithId() {
+            const id = getIdFromUrl();
+            if (id) {
+                document.querySelectorAll('a').forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && !href.includes('?')) {
+                        link.href = `${href}?id=${id}`;
+                    }
+                });
+            }
+        }
+
+        // Fonction pour récupérer les informations de l'utilisateur
+        async function fetchUserInfo() {
+            try {
+                const email = getIdFromUrl();
+                console.log('🔄 Récupération des informations pour:', email);
+                
+                const response = await fetch(`/api/user-info?email=${email}`);
+                const userInfo = await response.json();
+                
+                console.log('📊 Informations utilisateur reçues:', userInfo);
+                
+                // Mettre à jour l'affichage avec les informations de l'utilisateur
+                const userInfoElements = document.querySelectorAll('.user-info');
+                userInfoElements.forEach(element => {
+                    const field = element.getAttribute('data-field');
+                    if (userInfo[field]) {
+                        element.textContent = userInfo[field];
+                    }
+                });
+                
+                return userInfo;
+            } catch (error) {
+                console.error('❌ Erreur lors de la récupération des informations utilisateur:', error);
+            }
+        }
+
+        // Mettre à jour les liens et les informations utilisateur au chargement de la page
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('📄 DOM chargé, mise à jour des liens et des informations utilisateur...');
+            updateLinksWithId();
+            await fetchUserInfo();
+            console.log('✅ Initialisation terminée');
+        });
+
+        // Fonction pour récupérer les campagnes actives depuis Airtable
+        async function fetchActiveCampaigns() {
+            try {
+                console.log('🔄 [Assignment Settings] Récupération des campagnes actives...');
+                const response = await fetch('/api/campaign-status');
+                const data = await response.json();
+                
+                console.log('📦 [Assignment Settings] Données reçues:', data);
+                
+                if (!Array.isArray(data)) {
+                    console.error('❌ [Assignment Settings] Les données ne sont pas un tableau');
+                    return [];
+                }
+
+                const activeCampaigns = data.filter(campaign => {
+                    const isActive = campaign.Status === 'Active';
+                    console.log(`🔍 [Assignment Settings] Vérification de ${campaign['Campaign Name']}:`, {
+                        status: campaign.Status,
+                        isActive: isActive
+                    });
+                    return isActive;
+                });
+
+                console.log('✅ [Assignment Settings] Campagnes actives trouvées:', activeCampaigns);
+                return activeCampaigns;
+            } catch (error) {
+                console.error('❌ [Assignment Settings] Erreur lors de la récupération des campagnes:', error);
+                return [];
+            }
+        }
+
+        // Fonction pour créer une section de campagne
+        async function createCampaignSection(campaign) {
+            const campaignName = campaign['Campaign Name'];
+            const campaignKey = campaignName.toLowerCase().replace(' campaign', '');
+            
+            // Récupérer les informations des utilisateurs
+            const email = getIdFromUrl();
+            const response = await fetch(`/api/user-info?email=${email}`);
+            const usersInfo = await response.json();
+            
+            console.log('📊 [Assignment Settings] Informations utilisateurs pour la campagne:', {
+                campaignName,
+                campaignKey,
+                usersInfo
+            });
+            
+            // Initialiser les pourcentages pour cette campagne
+            campaigns[campaignKey] = {};
+            
+            // Récupérer les utilisateurs pour cette campagne en utilisant le nom exact de la campagne
+            const campaignUsers = usersInfo[campaignName] || [];
+            
+            console.log('📊 [Assignment Settings] Utilisateurs trouvés pour la campagne:', {
+                campaignName,
+                campaignUsers
+            });
+            
+            const userRows = campaignUsers.map(user => {
+                const userKey = user.name.toLowerCase();
+                const rowId = `${campaignKey}-${userKey}`;
+                campaigns[campaignKey][userKey] = user.percentage || 0;
+                
+                return `
+                    <div class="user-row" data-user-id="${rowId}">
+                        <div class="user-info">
+                            <div class="user-avatar">${user.name.charAt(0)}</div>
+                            <span class="user-name">${user.name}</span>
+                        </div>
+                        <div class="percentage-controls">
+                            <div class="percentage-input-container">
+                                <button class="adjust-button" onclick="adjustPercentage('${rowId}', -1)">
+                                    <svg viewBox="0 0 8 2"><rect width="8" height="2" fill="#248EF3"></rect></svg>
+                                </button>
+                                <span class="percentage-value" data-percentage-id="${rowId}">${user.percentage || 0}%</span>
+                                <button class="adjust-button" onclick="adjustPercentage('${rowId}', 1)">
+                                    <svg viewBox="0 0 8 8"><path d="M3 0V3H0V5H3V8H5V5H8V3H5V0H3Z" fill="#248EF3"></path></svg>
+                                </button>
+                            </div>
+                            <span class="monthly-leads">Monthly Leads</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            return `
+                <div class="campaign-section">
+                    <h2 class="campaign-title">${campaignName} Lead Allocation</h2>
+                    <div class="space-y-4">
+                        ${userRows}
+                        <div class="distribution-checkbox">
+                            <input type="checkbox" class="form-checkbox" onchange="toggleDistribution('${campaignKey}')">
+                            <label class="distribution-label">Distribute equally among all users</label>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Fonction pour mettre à jour l'affichage des campagnes
+        async function updateCampaignsDisplay() {
+            try {
+                console.log('🔄 [Assignment Settings] Mise à jour de l\'affichage des campagnes...');
+                const campaignsContainer = document.getElementById('campaignsContainer');
+                if (!campaignsContainer) {
+                    console.error('❌ [Assignment Settings] Container des campagnes non trouvé');
+                    return;
+                }
+
+                const activeCampaigns = await fetchActiveCampaigns();
+                console.log('📊 [Assignment Settings] Campagnes actives à afficher:', activeCampaigns);
+
+                // Vider le conteneur
+                campaignsContainer.innerHTML = '';
+
+                // Ajouter chaque campagne active
+                for (const campaign of activeCampaigns) {
+                    const campaignSection = await createCampaignSection(campaign);
+                    campaignsContainer.innerHTML += campaignSection;
+                }
+
+                console.log('✅ [Assignment Settings] Affichage des campagnes mis à jour avec succès');
+            } catch (error) {
+                console.error('❌ [Assignment Settings] Erreur lors de la mise à jour de l\'affichage:', error);
+            }
+        }
+
+        // Mettre à jour l'affichage au chargement de la page
+        document.addEventListener('DOMContentLoaded', updateCampaignsDisplay);
+    </script>
+</body>
+</html> 

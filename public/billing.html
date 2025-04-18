@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clead - Billing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Main header -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-start gap-[55px] h-16">
+                <div class="text-[25px] font-medium text-[#101828]">Clead</div>
+                <nav>
+                    <ul class="flex items-center gap-[45px]">
+                        <li><a href="/" class="text-[15px] font-medium text-[#4C5563] hover:text-[#3FA1D9]">Received Leads</a></li>
+                        <li><a href="/manage-package.html" class="text-[15px] font-medium text-[#4C5563] hover:text-[#3FA1D9]">Manage Lead Package</a></li>
+                        <li><a href="/assignment-settings.html" class="text-[15px] font-medium text-[#4C5563] hover:text-[#3FA1D9]">Assignment Settings</a></li>
+                        <li><a href="/billing.html" class="text-[15px] font-medium text-[#3FA1D9] border-b-2 border-[#3FA1D9] pb-2">Billing</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Orders Section -->
+        <div style="width: 100%; height: 100%; padding: 30px; background: white; border-radius: 8px; outline: 1px var(--Border-+-Light-Field-Text, #D0D5DD) solid; outline-offset: -1px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 25px; display: inline-flex">
+            <div style="justify-content: center; display: flex; flex-direction: column; color: var(--Dark-Grey-text-&-icons, #4C5563); font-size: 20px; font-family: Roboto; font-weight: 500; letter-spacing: 0.20px; word-wrap: break-word">Orders </div>
+            <div style="flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 15px; display: flex">
+                <div style="justify-content: flex-start; align-items: flex-start; gap: 30px; display: inline-flex">
+                    <div style="width: 150px; justify-content: center; display: flex; flex-direction: column; color: rgba(101, 117, 125, 0.60); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">ID Order </div>
+                    <div style="width: 150px; justify-content: center; display: flex; flex-direction: column; color: rgba(101, 117, 125, 0.60); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">Period</div>
+                    <div style="width: 180px; justify-content: center; display: flex; flex-direction: column; color: rgba(101, 117, 125, 0.60); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">Status</div>
+                    <div style="width: 120px; justify-content: center; display: flex; flex-direction: column; color: rgba(101, 117, 125, 0.60); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">Quote</div>
+                    <div style="width: 120px; justify-content: center; display: flex; flex-direction: column; color: rgba(101, 117, 125, 0.60); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">Invoice</div>
+                </div>
+                <div style="align-self: stretch; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: flex">
+                    <div style="justify-content: flex-start; align-items: center; gap: 30px; display: inline-flex">
+                        <div style="width: 150px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 600; letter-spacing: 0.14px; word-wrap: break-word">N°4978HF</div>
+                        <div style="width: 150px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">2025, March</div>
+                        <div style="width: 180px; padding-top: 8px; padding-bottom: 8px; border-radius: 34px; justify-content: flex-start; align-items: center; gap: 5px; display: flex">
+                            <div style="width: 8px; height: 8px; background: #FF9D00; border-radius: 9999px"></div>
+                            <div style="justify-content: flex-start; align-items: center; gap: 5px; display: flex">
+                                <div style="color: #4C5563; font-size: 13px; font-family: Roboto; font-weight: 600; line-height: 15.40px; word-wrap: break-word">Waiting for Payment</div>
+                            </div>
+                        </div>
+                        <div style="width: 120px; height: 31px; position: relative">
+                            <img style="width: 42px; height: 31px; left: 0px; top: 0px; position: absolute; border-radius: 3px; border: 0.50px var(--Border-+-Light-Field-Text, #D0D5DD) solid" src="https://placehold.co/42x31" />
+                            <div style="width: 11px; height: 11px; left: 15px; top: 10px; position: absolute; overflow: hidden">
+                                <div style="width: 10.08px; height: 6.88px; left: 0.46px; top: 2.06px; position: absolute; background: var(--Grey-GHL, #65757D)"></div>
+                            </div>
+                        </div>
+                        <div style="width: 150px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">-</div>
+                    </div>
+                    <div style="align-self: stretch; height: 0px; outline: 0.50px var(--Border-+-Light-Field-Text, #D0D5DD) solid; outline-offset: -0.25px"></div>
+                    <div style="justify-content: flex-start; align-items: center; gap: 30px; display: inline-flex">
+                        <div style="width: 150px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 600; letter-spacing: 0.14px; word-wrap: break-word">N°4664MK</div>
+                        <div style="width: 150px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">2025, February</div>
+                        <div style="width: 180px; padding-top: 8px; padding-bottom: 8px; border-radius: 34px; justify-content: flex-start; align-items: center; gap: 5px; display: flex">
+                            <div style="width: 8px; height: 8px; background: #248EF3; border-radius: 9999px"></div>
+                            <div style="justify-content: flex-start; align-items: center; gap: 5px; display: flex">
+                                <div style="color: #4C5563; font-size: 13px; font-family: Roboto; font-weight: 600; line-height: 15.40px; word-wrap: break-word">In Process</div>
+                            </div>
+                        </div>
+                        <div style="width: 120px; height: 31px; position: relative">
+                            <img style="width: 42px; height: 31px; left: 0px; top: 0px; position: absolute; border-radius: 3px; border: 0.50px var(--Border-+-Light-Field-Text, #D0D5DD) solid" src="https://placehold.co/42x31" />
+                            <div style="width: 11px; height: 11px; left: 15px; top: 10px; position: absolute; overflow: hidden">
+                                <div style="width: 10.08px; height: 6.88px; left: 0.46px; top: 2.06px; position: absolute; background: var(--Grey-GHL, #65757D)"></div>
+                            </div>
+                        </div>
+                        <div style="width: 120px; height: 31px; position: relative">
+                            <img style="width: 42px; height: 31px; left: 0px; top: 0px; position: absolute; border-radius: 3px; border: 0.50px var(--Border-+-Light-Field-Text, #D0D5DD) solid" src="https://placehold.co/42x31" />
+                            <div style="width: 11px; height: 11px; left: 15px; top: 10px; position: absolute; overflow: hidden">
+                                <div style="width: 10.08px; height: 6.88px; left: 0.46px; top: 2.06px; position: absolute; background: var(--Grey-GHL, #65757D)"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="align-self: stretch; height: 0px; outline: 0.50px var(--Border-+-Light-Field-Text, #D0D5DD) solid; outline-offset: -0.25px"></div>
+                    <div style="justify-content: flex-start; align-items: center; gap: 30px; display: inline-flex">
+                        <div style="width: 150px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 600; letter-spacing: 0.14px; word-wrap: break-word">N°4489JH</div>
+                        <div style="width: 150px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">2025, January</div>
+                        <div style="width: 180px; padding-top: 8px; padding-bottom: 8px; border-radius: 34px; justify-content: flex-start; align-items: center; gap: 5px; display: flex">
+                            <div style="width: 8px; height: 8px; background: #55DD79; border-radius: 9999px"></div>
+                            <div style="justify-content: flex-start; align-items: center; gap: 5px; display: flex">
+                                <div style="color: #4C5563; font-size: 13px; font-family: Roboto; font-weight: 600; line-height: 15.40px; word-wrap: break-word">Processed</div>
+                            </div>
+                        </div>
+                        <div style="width: 120px; height: 31px; position: relative">
+                            <img style="width: 42px; height: 31px; left: 0px; top: 0px; position: absolute; border-radius: 3px; border: 0.50px var(--Border-+-Light-Field-Text, #D0D5DD) solid" src="https://placehold.co/42x31" />
+                            <div style="width: 11px; height: 11px; left: 15px; top: 10px; position: absolute; overflow: hidden">
+                                <div style="width: 10.08px; height: 6.88px; left: 0.46px; top: 2.06px; position: absolute; background: var(--Grey-GHL, #65757D)"></div>
+                            </div>
+                        </div>
+                        <div style="width: 120px; height: 31px; position: relative">
+                            <img style="width: 42px; height: 31px; left: 0px; top: 0px; position: absolute; border-radius: 3px; border: 0.50px var(--Border-+-Light-Field-Text, #D0D5DD) solid" src="https://placehold.co/42x31" />
+                            <div style="width: 11px; height: 11px; left: 15px; top: 10px; position: absolute; overflow: hidden">
+                                <div style="width: 10.08px; height: 6.88px; left: 0.46px; top: 2.06px; position: absolute; background: var(--Grey-GHL, #65757D)"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="align-self: stretch; height: 0px; outline: 0.50px var(--Border-+-Light-Field-Text, #D0D5DD) solid; outline-offset: -0.25px"></div>
+                    <div style="justify-content: flex-start; align-items: center; gap: 30px; display: inline-flex">
+                        <div style="width: 150px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 600; letter-spacing: 0.14px; word-wrap: break-word">N°4041JZ</div>
+                        <div style="width: 150px; justify-content: center; display: flex; flex-direction: column; color: var(--Grey-GHL, #65757D); font-size: 14px; font-family: Roboto; font-weight: 400; letter-spacing: 0.14px; word-wrap: break-word">2024, December</div>
+                        <div style="width: 180px; padding-top: 8px; padding-bottom: 8px; border-radius: 34px; justify-content: flex-start; align-items: center; gap: 5px; display: flex">
+                            <div style="width: 8px; height: 8px; background: #55DD79; border-radius: 9999px"></div>
+                            <div style="justify-content: flex-start; align-items: center; gap: 5px; display: flex">
+                                <div style="color: #4C5563; font-size: 13px; font-family: Roboto; font-weight: 600; line-height: 15.40px; word-wrap: break-word">Processed</div>
+                            </div>
+                        </div>
+                        <div style="width: 120px; height: 31px; position: relative">
+                            <img style="width: 42px; height: 31px; left: 0px; top: 0px; position: absolute; border-radius: 3px; border: 0.50px var(--Border-+-Light-Field-Text, #D0D5DD) solid" src="https://placehold.co/42x31" />
+                            <div style="width: 11px; height: 11px; left: 15px; top: 10px; position: absolute; overflow: hidden">
+                                <div style="width: 10.08px; height: 6.88px; left: 0.46px; top: 2.06px; position: absolute; background: var(--Grey-GHL, #65757D)"></div>
+                            </div>
+                        </div>
+                        <div style="width: 120px; height: 31px; position: relative">
+                            <img style="width: 42px; height: 31px; left: 0px; top: 0px; position: absolute; border-radius: 3px; border: 0.50px var(--Border-+-Light-Field-Text, #D0D5DD) solid" src="https://placehold.co/42x31" />
+                            <div style="width: 11px; height: 11px; left: 15px; top: 10px; position: absolute; overflow: hidden">
+                                <div style="width: 10.08px; height: 6.88px; left: 0.46px; top: 2.06px; position: absolute; background: var(--Grey-GHL, #65757D)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>
+        // Fonction pour récupérer l'ID de l'URL
+        function getIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // Fonction pour mettre à jour les liens avec l'ID
+        function updateLinksWithId() {
+            const id = getIdFromUrl();
+            if (id) {
+                document.querySelectorAll('a').forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && !href.includes('?')) {
+                        link.href = `${href}?id=${id}`;
+                    }
+                });
+            }
+        }
+
+        // Mettre à jour les liens immédiatement et au chargement de la page
+        updateLinksWithId();
+        document.addEventListener('DOMContentLoaded', () => {
+            updateLinksWithId();
+        });
+    </script>
+</body>
+</html> 

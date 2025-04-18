@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Status badges */
+.status-badge {
+    @apply px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.status-new {
+    @apply bg-[#ECFDF3] text-[#027A48];
+}
+
+.status-processed {
+    @apply bg-[#FEF3F2] text-[#B42318];
+}
+
+/* Table rows */
+.table-row {
+    @apply border-b border-[#EAECF0];
+}
+
+.table-row:hover {
+    @apply bg-[#F9FAFB];
+}
+
+/* Agent image */
+.agent-image {
+    @apply w-8 h-8 rounded-full object-cover;
+}
+
+/* Filter buttons */
+.filter-btn {
+    @apply transition-colors duration-200;
+}
+
+.filter-btn:hover {
+    @apply bg-[#7F56D9] text-white;
+}
+
+/* Search input */
+#searchInput {
+    @apply transition-colors duration-200;
+}
+
+#searchInput:focus {
+    @apply border-[#7F56D9] ring-2 ring-[#7F56D9];
+}
+
+/* Dropdown */
+#assignToDropdown {
+    @apply transition-opacity duration-200;
+}
+
+/* Stats counters */
+.total-leads-counter,
+.new-leads-counter,
+.processed-leads-counter,
+.revenue-counter {
+    @apply transition-all duration-200;
+}
+
+.filter-button {
+    display: flex;
+    padding: 0.5rem 1rem;
+    align-items: center;
+    gap: 0.3125rem;
+    border-radius: 2.125rem;
+    font-size: 0.875rem;
+    color: #4C5563;
+    transition: all 0.2s;
+}
+
+.filter-button:hover {
+    background: #F2F4F7;
+}
+
+.filter-button.active {
+    background: #F2F4F7;
+    color: #111827;
+    font-weight: 500;
+}
+
+.avatar {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+/* Styles pour le header */
+header {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+header nav a {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+}
+
+header nav a:hover {
+    color: #2563eb;
+}
+
+/* Style pour le sous-header avec les compteurs */
+.counter-divider {
+    color: #D1D5DB;
+    margin: 0 1rem;
+} 
